@@ -154,6 +154,18 @@ The first primitive object should be an \textbf{actual valued computational prov
 \end{conceptbox}
 \end{thoughtbox}
 
+\begin{thoughtbox}{The stationary decoder that still fits anything}
+\scene Strengthen the previous proposal: one fixed local decoder must be used throughout the episode. Now suppose that every exact carrier microstate encountered during the finite run is unique. None of the physical values ever repeats exactly.
+
+\failure A single stationary lookup rule can still be defined after the fact, assigning each unique carrier state whatever abstract value the target trajectory requires. The decoder no longer mentions time, yet the completed answer remains hidden in its graph. Stationarity blocks contradictory reuse of one carrier state; it does not by itself block arbitrary labeling of states seen only once.
+
+\lesson Coherence is necessary but not sufficient. The eligible carrier variables and decoder family must be fixed independently of the desired computation. Useful constraints include physically natural coarse variables, locality, bounded descriptive complexity, stability under an explicitly stated class of perturbations, and reuse across components or episodes. Which constraints are appropriate is part of the realization claim and cannot be concealed in the word ``representation.''
+
+\begin{conceptbox}
+Objectivity is therefore policy-relative but non-arbitrary: after an admissibility policy has been selected independently of the target, realization is a factual question. A document that suppresses that policy has not yet stated a complete implementation claim.
+\end{conceptbox}
+\end{thoughtbox}
+
 \begin{thoughtbox}{The same function, two different computations}
 \scene Consider the function that maps an integer $N$ to the sum of the integers from $1$ to $N$.
 
@@ -168,6 +180,14 @@ So ``same function'' is too coarse to mean ``same computation.''
 \begin{conceptbox}
 A function forgets the path. A computation, at a finer description, includes the structured production of the result. Therefore function identity and computational identity must not be primitive synonyms.
 \end{conceptbox}
+\end{thoughtbox}
+
+\begin{thoughtbox}{A loop and its finite unrolling}
+\scene Compare a recurrent component used ten times with a feed-forward chain of ten one-use copies. Arrange the copies so that, during the observed interval, the same values are produced in the same event-token pattern.
+
+\failure If a computational occurrence records only event occurrences and values, the two episodes can become isomorphic. If it also records persistent component identity, they differ. Neither answer follows from the bare graph: it depends on whether reuse is part of the computational structure under study.
+
+\lesson Port identity and persistent component identity must be explicit fields rather than informal annotations. An admissible abstraction may later forget them, but the fine occurrence should make that loss visible.
 \end{thoughtbox}
 
 \begin{thoughtbox}{The subroutine disappears inside a larger program}
@@ -265,6 +285,14 @@ A value-support structure is not purely non-counterfactual. It is indexed by an 
 \end{cautionbox}
 \end{thoughtbox}
 
+\begin{thoughtbox}{A result produced by silence or inhibition}
+\scene A downstream event occurs only if no veto signal arrives during a fixed interval. In another system, a low-voltage token explicitly carrying the Boolean value \texttt{false} arrives at a port. Both cases may be described informally as ``false,'' but their physical provenance differs: one contains a value-bearing token, while the other depends on a non-occurrence over time.
+
+\failure A graph containing only positive event and token occurrences cannot represent absence merely by omitting a node: omission is indistinguishable from an incomplete observation or an arbitrarily cropped episode. Reifying every silence as a token also begs the question of which interval and which missing event make that token legitimate.
+
+\lesson The base formalism is adequate for positive value flow but not universal. Applications involving inhibition, prevention, timeouts, or alternative enabling need explicit temporal windows and absence/enabling structure, or a translation into such structure whose admissibility is independently justified.
+\end{thoughtbox}
+
 \begin{thoughtbox}{One actual run does not identify the whole mechanism}
 \scene Observe a component three times. On the three input cases that actually occur, its outputs agree with an AND gate. The fourth input case never occurs.
 
@@ -282,6 +310,14 @@ If we insist that every statement about computation must already include all the
 \end{conceptbox}
 
 The occurrent notion deliberately concludes less. It is stronger than a state trajectory because it contains actual represented provenance and composition, but weaker than a complete modal mechanism because it leaves unvisited cases open.
+\end{thoughtbox}
+
+\begin{thoughtbox}{The same realized path under different probabilities}
+\scene Two stochastic mechanisms produce exactly the same finite event-token episode. Under the first mechanism the observed path had probability $0.9$; under the second it had probability $10^{-30}$ and occurred by extraordinary luck.
+
+\failure Path identity alone does not determine whether the transition kernels belong to the identity of the computation. Conversely, kernel identity alone forgets which sample path actually occurred. Treating probability as either automatically occurrent or automatically irrelevant collapses two different questions.
+
+\lesson A stochastic extension needs both a realized occurrence and a modal probability kernel. It must state separately whether probabilities help individuate the represented mechanism and whether a particular comparison is about the actual path, the capacity distribution, or both.
 \end{thoughtbox}
 
 \begin{thoughtbox}{Two different computers running ``the same thing''}
@@ -320,7 +356,7 @@ The thought experiments above are not independent curiosities. They force a comp
 
 \subsection{Physical episodes and computational provenance}
 
-A \textbf{physical episode} is a bounded piece of the actual evolution of a physical system. For computational purposes, the episode should not be reduced to a sequence of global snapshots. What matters is its internal actual organization: events, value-bearing carriers or tokens, transport, consumption, production, routing, control, reuse, and partial order.
+A \textbf{physical episode} is a bounded piece of the actual evolution of a physical system. For computational purposes, the episode should not be reduced to a sequence of global snapshots. What matters is its internal actual organization: events, typed and port-labeled value-bearing carriers or tokens, transport, consumption, production, routing, persistent component identity, control, reuse, declared boundaries, and partial order.
 
 Call this enriched object the episode's \textbf{actual valued computational provenance structure}. The word ``provenance'' is deliberate. The base object records how pieces of represented information actually moved through and were transformed by the episode. It does not silently identify that factual participation relation with a stronger theory of which values were the decisive causes of each result.
 
@@ -333,7 +369,7 @@ Repeated uses of the same component can reveal more structure without introducin
 A second enrichment is possible when the local operation type is independently available. For one actual operation occurrence, define a \textbf{value support} as a set of actual input-value assignments sufficient to fix the actual output value while the remaining inputs are left free. Minimal supports form a hypergraph over the actual value tokens. This object is useful but must be classified carefully: it is anchored to an actual occurrence yet uses local modal semantics to test sufficiency. It is therefore richer than provenance and weaker than importing the modal organization of the whole system.
 
 \begin{definitionbox}
-An \textbf{occurrent computational abstraction} is a structure-preserving compression of an actual valued computational provenance structure under a coherent representation scheme. It may hide internal details, merge events, or replace a detailed subsystem by an abstract component, but only when the retained value flow, participation structure, ordering, and composition are genuinely supported by what occurred.
+An \textbf{occurrent computational abstraction} is a structure-preserving compression of an actual valued computational provenance structure under a coherent representation scheme. It may hide internal details, merge events, or replace a detailed subsystem by an abstract component, but every retained operand, result, dependency, and precedence relation must have an actual witness. Selecting a subepisode must either retain a selected event's relevant incident tokens or expose them explicitly at its boundary.
 \end{definitionbox}
 
 \subsection{Four relations that should not be collapsed}
@@ -341,7 +377,7 @@ An \textbf{occurrent computational abstraction} is a structure-preserving compre
 The phrase ``causal structure'' is too overloaded to serve as a single primitive. At least four relations should be kept conceptually separate.
 
 \begin{center}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries}p{33mm}XX}
+\begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash\bfseries}p{33mm}>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}X}
 \toprule
 Relation & What it says & Modal status \\
 \midrule
@@ -387,7 +423,7 @@ These are not merely unstructured bags of descriptions. They carry at least a re
 \begin{thesisbox}[title={Implementation without an observer-selected level}]
 A physical system implements an abstract computation $C$ when $C$ occurs as an admissible member of the relevant computational spectrum.
 
-The observer may decide to ask about $C$, but does not create $C$ by selecting a level. The system either contains the required computational structure or it does not.
+The observer may decide to ask about $C$, but does not create $C$ by selecting a level. More exactly, relative to a carrier, factorization, and decoder policy fixed independently of $C$, the system either contains the required structure or it does not. Different scientific domains may justify different policies; hiding that parameter would overstate the objectivity claim.
 \end{thesisbox}
 
 \subsection{Why there are two spectra}
@@ -395,7 +431,7 @@ The observer may decide to ask about $C$, but does not create $C$ by selecting a
 The occurrent and modal spectra answer different questions.
 
 \begin{center}
-\begin{tabularx}{\textwidth}{>{\bfseries}p{28mm}XX}
+\begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash\bfseries}p{28mm}>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}X}
 \toprule
  & Occurrent spectrum & Modal spectrum \\
 \midrule
@@ -408,7 +444,7 @@ Blocks & Mere relabeling of snapshots & Accidental agreement on one history \\
 \end{tabularx}
 \end{center}
 
-A modal realization, when actually executed, should produce a corresponding occurrent realization under the same representation scheme. But a single occurrent realization generally admits many possible modal completions. The occurrent trace can constrain those completions by accumulating partial operation tables without selecting values for cases that never occurred.
+A modal realization whose variable grouping is backed by local event and port witnesses, when actually executed, should produce a corresponding occurrent realization under the same representation scheme. Global state-transition agreement alone is insufficient, because two mechanisms with the same global transition can have different internal provenance. A single occurrent realization generally admits many possible modal completions. The occurrent trace can constrain those completions by accumulating partial operation tables without selecting values for cases that never occurred.
 
 This relationship can be pictured without implying that abstraction and modality are the same dimension:
 
@@ -432,7 +468,7 @@ Once the spectrum replaces the picture of one privileged level, several comparat
 
 \subsection{Refinement}
 
-A computation $A$ \textbf{refines} a computation $B$ when $A$ retains all the distinctions of $B$ and additional ones. Replacing a loop by a black-box ``SUM'' component moves from a finer member of the spectrum to a coarser one. Abstracting a different component gives a different branch, not necessarily a higher or lower point on one scalar ladder.
+A computation $A$ \textbf{refines} a computation $B$ when there is an admissible abstraction from $A$ to $B$. Before quotienting, this relation is generally only a preorder: two non-identical descriptions may abstract to one another. The spectrum becomes a partial order after identifying mutual-abstraction classes. Replacing a loop by a black-box ``SUM'' component moves from a finer member of the spectrum to a coarser one. Abstracting a different component gives a different branch, not necessarily a higher or lower point on one scalar ladder.
 
 \subsection{Containment}
 
@@ -461,6 +497,8 @@ For systems $X$ and $Y$, the informal idea is the structured overlap
 
 The notation hides technical choices about isomorphism and embedding, but the concept is clear: two machines can be deeply different while still sharing a rich common computational organization.
 
+Every spectrum may also contain trivial bottom abstractions. Their presence in every intersection is not evidence of a substantive common core. Comparisons should therefore identify maximal nontrivial common elements, impose a rank or resource baseline, or explicitly subtract the universal bottom structure.
+
 \begin{takeawaybox}
 The question ``are these two machines doing the same computation?'' is usually underspecified. Better questions are:
 \begin{itemize}
@@ -475,13 +513,13 @@ The question ``are these two machines doing the same computation?'' is usually u
 
 The theory separates three issues that are often collapsed.
 
-\textbf{First: physical realization.} Whether an admissible computational structure occurs in the spectrum is intended to be an objective fact about the system. Admissibility includes coherent representation: a computational value cannot be rescued by changing the codebook opportunistically from one occurrence to the next.
+\textbf{First: physical realization.} Once a realization policy has been fixed independently of the target computation, whether an admissible structure occurs in the spectrum is intended to be an objective fact about the system. Admissibility includes coherent representation, boundary fullness, and provenance witnessing: a computational value or dependency cannot be rescued by changing the codebook opportunistically or by drawing an abstract edge with no physical witness.
 
 \textbf{Second: abstraction.} The spectrum contains many abstractions at once. No single member has to be privileged as ``the'' computational level.
 
 \textbf{Third: reference.} Human language may be vague about which abstract object is intended. ``Windows 95,'' ``the same algorithm,'' or ``the same agent'' can underdetermine what part of the spectrum is being named.
 
-This locates conventionality in the question rather than in the physical realization. A name may fail to specify its target precisely; that does not imply that membership in the spectrum is observer-relative.
+This locates some conventionality in the question rather than in the physical realization. A name may fail to specify its target precisely; that does not imply that membership in a policy-indexed spectrum is observer-relative. The stronger claim that one admissibility policy is uniquely privileged across all scientific domains is neither needed nor established here.
 
 Context also matters locally. Two subroutines can be interchangeable for a caller that sees only input and output, yet distinguishable for a caller that observes timing, intermediate memory, power use, or interruptibility. The admissible abstraction must therefore preserve every distinction that remains accessible through the interface of the larger computation.
 
@@ -510,11 +548,11 @@ Distinct computations can collapse to the same input-output function. Therefore 
 \end{consequencebox}
 
 \begin{consequencebox}[title={6. Abstraction is generally only partially ordered}]
-Independent local abstractions generate incomparable descriptions. A theory that represents granularity by one scalar level discards real structure in the space of computational descriptions.
+Independent local abstractions generate incomparable descriptions. Existence of an abstraction first gives a preorder; quotienting descriptions that abstract to one another gives the corresponding partial order. A theory that represents granularity by one scalar level discards real structure in the space of computational descriptions.
 \end{consequencebox}
 
 \begin{consequencebox}[title={7. Modal realization projects to occurrent realization}]
-Whenever a modal mechanism is actually run, the realized episode should instantiate an occurrent member compatible with that mechanism. The strong notion therefore entails a corresponding weak actual-run notion.
+Whenever a modal realization is backed by compatible local event and port witnesses and is actually run, the realized episode instantiates a compatible occurrent member. Commutation of global states alone does not establish this projection.
 \end{consequencebox}
 
 \begin{consequencebox}[title={8. Occurrent realization underdetermines modal realization}]
@@ -537,6 +575,8 @@ If the same component is actually encountered on several input cases, the occurr
 Fix an abstract computation and consider all of its admissible realizations satisfying a resource budget. Intersect their spectra. If the budget is tightened, the class of admissible realizations shrinks, so this inevitable common core can only stay the same or grow.
 
 This does \emph{not} imply that stronger compression always recovers the architecture of some chosen original system. Different compact algorithms may still exist. It instead defines a clean notion of \textbf{computational rigidity}: which structures become unavoidable under resource pressure.
+
+Trivial bottom abstractions should be removed or discounted when reporting such a core; otherwise every intersection can look nonempty for an uninformative reason.
 \end{consequencebox}
 
 \section{A compact reconstruction of the theory}
@@ -544,15 +584,15 @@ This does \emph{not} imply that stronger compression always recovers the archite
 The formal theory can be reconstructed from this note in the following order.
 
 \begin{enumerate}
-  \item \textbf{Represent actual processes richly.} Use events and value-bearing tokens with actual transport, consumption, production, ordering, control, reuse, and composition. Do not begin from atomic state sequences.
-  \item \textbf{Fix coherent value representation.} Allow heterogeneous local encodings, but require stable typed decoding rules and explicit translations. Do not let the decoder depend on the completed trajectory.
+  \item \textbf{Represent actual processes richly.} Use typed ports, events, value-bearing tokens, persistent component identities, declared boundaries, actual transport, consumption, production, ordering, control, reuse, and composition. Do not begin from atomic state sequences.
+  \item \textbf{Fix coherent value representation and admissibility.} Allow heterogeneous local encodings, but require stable typed decoding rules and explicit translations. Fix the eligible carriers and decoder family independently of the desired trajectory; stationarity alone is insufficient when every exact carrier state is unique.
   \item \textbf{Separate dependence relations.} Use participation/provenance as the base occurrent relation. Distinguish it from actual contribution and from general modal dependence.
   \item \textbf{Add value support only as an explicit enrichment.} When local operation semantics are supplied, actual values can be organized into minimal sufficient support sets. Record that this is occurrence-indexed but locally modal, not primitive provenance.
-  \item \textbf{Define admissible abstractions.} An abstraction may forget internal distinctions only when the retained computational organization is genuinely supported by the physical organization and representation scheme.
-  \item \textbf{Order abstractions by refinement.} Allow different subsystems to be abstracted independently, giving a poset and, where justified, lattice-like structure.
+  \item \textbf{Define admissible abstractions.} An abstraction may forget internal distinctions only when every retained incidence, dependency, and boundary relation has a physical witness.
+  \item \textbf{Order abstractions by refinement.} Allow different subsystems to be abstracted independently, first obtaining a preorder and then its poset reflection; lattice-like structure requires further conditions.
   \item \textbf{Build the occurrent spectrum.} For a physical episode, collect all admissible abstractions of its actual valued computational provenance structure. Repeated actual cases may determine partial operation tables.
   \item \textbf{Build the modal spectrum.} For a mechanism, collect all admissible abstractions whose transition organization and dependence structure remain valid across the relevant alternative inputs and interventions.
-  \item \textbf{Relate the two.} Modal structures project to actual runs; actual runs and their partial laws constrain but generally do not uniquely determine modal completions.
+  \item \textbf{Relate the two locally.} Unfolding-compatible modal structures project to actual runs; actual runs and their partial laws constrain but generally do not uniquely determine modal completions.
   \item \textbf{Define implementation by membership.} A computation is implemented when it occurs in the relevant spectrum, not because an observer has privileged a level.
   \item \textbf{Compare systems spectrally.} Use refinement, containment, spectral equivalence, and common computational core rather than one undifferentiated relation of sameness.
   \item \textbf{Keep naming separate.} Artifact labels such as program names may require additional historical or conventional criteria beyond computational structure.
@@ -586,7 +626,7 @@ The aim is to constrain the architecture of computational-functionalist theories
 
 An abstract algorithm is a type. It can be instantiated zero, one, or many times. A conscious experience, by contrast, is naturally treated as an occurrence: something happening in a particular system over a particular interval.
 
-A computational functionalism should therefore assign phenomenal properties primarily to \textbf{actually instantiated computational episodes}, or to equivalence classes of such episodes under consciousness-irrelevant redescription. The modal computational spectrum remains important for what the system can do, but it need not be constitutive of what is experienced in one actual episode.
+A computational functionalism should therefore assign phenomenal properties primarily to \textbf{actually instantiated computational episodes}, or to equivalence classes of such episodes under a family of neutral redescriptions specified independently of the phenomenal verdict. The modal computational spectrum remains important for what the system can do, but it need not be constitutive of what is experienced in one actual episode.
 
 \begin{principlebox}[title={Phenomenal Actuality}]
 The phenomenal character of an episode should supervene on properties of the computational process actually instantiated in that episode. No phenomenal difference should arise from a difference that exists only outside the actual process, unless the theory explicitly argues that the modal difference itself is consciousness-relevant.
@@ -599,15 +639,27 @@ Suppose every actually encountered instance of a two-input OR gate has input \te
 A theory that changes the present phenomenology merely because the replacement gate \emph{would have} behaved differently on an unencountered input is making current experience depend on an unrealized branch. That may be a coherent metaphysical position, but it carries a substantial and unnecessary commitment.
 
 \begin{principlebox}[title={Counterfactual Irrelevance}]
-Differences confined to unrealized computational alternatives should not, by themselves, constitute phenomenal differences in the actual episode.
+After the actual computational structure has been independently grounded, differences confined to unrealized alternatives and playing no role in individuating its carriers, events, representations, boundaries, or actual dependencies should not, by themselves, constitute phenomenal differences in the episode.
 \end{principlebox}
 
-This principle is stronger than merely saying that the system's observable input-output behavior is the same. The actual internal generative process may still matter. What the principle excludes is a phenomenal dependence on differences whose only manifestation lies in unactualized transitions.
+This principle is stronger than merely saying that the system's observable input-output behavior is the same. The actual internal generative process may still matter. But the qualification is essential because modal information can play three different roles:
+
+\begin{enumerate}
+  \item \textbf{Individuating:} dispositions may help determine which carriers, operations, component identities, or representations are present in the actual episode.
+  \item \textbf{Evidential:} interventions may reveal which actual dependencies and boundaries the system possesses.
+  \item \textbf{Constitutive:} unmanifested alternatives may themselves be proposed as part of the present phenomenal basis.
+\end{enumerate}
+
+Counterfactual Irrelevance rejects the automatic move in the third role. It does not ban the first two, and it cannot be used to validate an arbitrary actual-run decoding whose grounding already fails.
 
 \begin{stressbox}[title={OR versus AND: why value support should not automatically be phenomenal}]
 For \texttt{OR(true,true)=true}, the actual output has two alternative singleton minimal supports. For \texttt{AND(true,true)=true}, it has one joint support containing both inputs. Thus the value-support hypergraphs differ even though the actual token flow and generated values can be identical.
 
 This is exactly why value support belongs in the theory of computation but should \emph{not} automatically be declared consciousness-constitutive. Its difference here is obtained from local counterfactual semantics. A candidate consciousness theory may use support structure if it has an independent reason to do so, but support difference alone should not be treated as an automatic phenomenal difference.
+\end{stressbox}
+
+\begin{stressbox}[title={Dormant error correction: an individuation test}]
+Suppose the same actual bit sequence passes through two devices, but only one belongs to an error-correcting architecture. No error occurs during the episode. The dormant code need not contribute directly to present phenomenology; nevertheless, it may help determine what counts as a bit, an error, a component boundary, or a correction operation. This case separates a modal fact used to individuate the actual computation from a modal fact promoted to a phenomenal constituent.
 \end{stressbox}
 
 \subsection{Actual generation should matter more than snapshot succession}
@@ -633,7 +685,7 @@ Changing the physical material should not change phenomenology when the consciou
 \end{principlebox}
 
 \begin{principlebox}[title={Inert-Extension Invariance}]
-Adding dormant branches, disconnected backup hardware, unused lookup tables, or other structures that do not participate in the actual consciousness-relevant process should not alter the phenomenology of that episode.
+Adding structure that is causally isolated from the declared bearer boundary throughout the relevant interval---not merely absent from a preferred description---should not alter the phenomenology of that episode.
 \end{principlebox}
 
 The last principle is especially important. Without it, attaching a physically inert device whose only role is to change what the system \emph{could} have done can change present experience without changing anything that actually happens.
@@ -643,7 +695,7 @@ The last principle is especially important. Without it, attaching a physically i
 The computational spectrum contains many abstractions of one episode. A neuronal description, a circuit description, and a task-level description can all be true at once. It would be pathological to count each as a new consciousness merely because the same process admits several computational witnesses.
 
 \begin{principlebox}[title={Abstraction Consistency}]
-Consciousness-making properties should be invariant under admissible redescriptions and refinements that add only consciousness-irrelevant detail. Multiple spectral descriptions of one physical realization do not by themselves imply multiple phenomenal subjects or episodes.
+Each candidate theory should specify a family of neutral redescriptions and refinements using computational or physical criteria independent of the phenomenal verdict. Consciousness-making properties should be invariant under that family. Multiple spectral descriptions of one physical realization do not by themselves imply multiple phenomenal subjects or episodes.
 \end{principlebox}
 
 This principle does not solve subject individuation when genuinely distinct or overlapping subsystems each instantiate candidate consciousness-bearing structures. That is a separate problem that a complete theory must address.
@@ -665,6 +717,8 @@ The modal computational spectrum is the natural home of capacities: what conscio
 
 This avoids making present phenomenology depend on unused competence while preserving a substantial role for modal computation in the theory of conscious agents.
 
+A stochastic variant sharpens the issue. Two systems may realize the same finite episode even though the episode is typical under one transition kernel and astronomically unlikely under the other. An actual-process theory must say whether those probabilities merely characterize capacity, help individuate the actual process, or enter phenomenology directly; the slogan ``same path'' does not decide the matter.
+
 \subsection{A class of admissible computational-functionalist theories}
 
 The preceding principles do not identify the consciousness-making invariant. They restrict the form of an acceptable candidate. A candidate property $P$ is structurally well behaved if it satisfies, or explicitly justifies violating, the following expectations:
@@ -672,22 +726,25 @@ The preceding principles do not identify the consciousness-making invariant. The
 \begin{enumerate}
   \item $P$ is a property of an actually instantiated computational organization, not merely of an abstract program considered without a realization.
   \item $P$ is invariant under coherent value recoding and irrelevant substrate changes.
-  \item $P$ does not change merely because unrealized transition rules, dormant branches, or inactive backup structures are altered.
+  \item $P$ does not change merely because unrealized transition rules or structures causally isolated from the declared bearer are altered, once the actual organization has been independently individuated.
   \item $P$ can be sensitive to actual internal generation and provenance, so that a movie playback need not be equivalent to a genuine computation.
-  \item $P$ is stable across admissible abstraction and refinement when the added or removed distinctions are declared consciousness-irrelevant.
+  \item $P$ is stable across an independently specified family of neutral abstractions and refinements; neutrality is not defined by presupposing $P$'s output.
   \item If $P$ depends on a locally modal object such as value support, the theory must explain why that local counterfactual information is constitutive rather than merely diagnostic.
   \item $P$ distinguishes phenomenal occurrence from modal capacity rather than treating them as the same question.
+  \item $P$ states its bearer boundary and prevents multiple descriptions or overlapping quotients from automatically multiplying subjects.
+  \item $P$ supplies diachronic and robustness conditions: subdivision, concatenation, timing variation, noise, and approximation have explicit effects rather than being left to the choice of description.
+  \item $P$ is operationally constrainable in principle; its extraction rule cannot encode the phenomenal verdict it is meant to predict.
 \end{enumerate}
 
 \begin{thesisbox}[title={The proposed default architecture}]
-The least conceptually loaded form of computational functionalism is an \textbf{actual-process computational functionalism}: phenomenal facts supervene on invariants of the computation actually generated during an episode, modulo coherent recoding, substrate changes, harmless refinement, and other computationally inert transformations. Modal structure describes the mechanism's capacities and constrains possible episodes, but differences confined to unrealized alternatives do not by themselves alter the phenomenology of the episode that actually occurred.
+A deliberately actualist form of computational functionalism is \textbf{actual-process computational functionalism}: phenomenal facts supervene on independently grounded invariants of the computation actually generated during an episode, modulo coherent recoding, substrate changes, explicitly neutral refinement, and causally isolated extensions. Modal structure can individuate mechanisms, support evidence, describe capacities, and constrain possible episodes, but a difference confined to unrealized alternatives is not by itself a difference in the phenomenology of the episode that occurred.
 \end{thesisbox}
 
 \section{Division of theoretical labor in the combined framework}
 
 The computational theory and the functionalist constraints now play different roles.
 
-\textbf{The computational theory} tells us what structures are objectively realized: provenance, representation, abstractions, partial operations, optional support structures, modal mechanisms, spectra, refinement, containment, and common computational cores.
+\textbf{The computational theory} tells us, relative to an independently fixed realization policy, what structures are realized: provenance, representation, abstractions, partial operations, optional support structures, modal mechanisms, spectra, refinement, containment, and common computational cores.
 
 \textbf{The functionalist framework} tells us how a consciousness theory should use those structures without inheriting avoidable pathologies. In particular, it warns against four shortcuts:
 
@@ -710,7 +767,7 @@ This leaves the substantive theory of consciousness open while specifying a much
 
 \begin{center}
 \fbox{\parbox{0.91\textwidth}{\centering
-\textbf{Physical systems support structured spectra of computational abstractions grounded in coherent representation and actual provenance; modal structure strengthens this into claims about alternative cases, while a disciplined computational functionalism should place present phenomenology primarily on invariants of the actually generated process and treat unrealized counterfactual differences as non-constitutive unless independently justified.}
+\textbf{Relative to independently fixed realization policies, physical systems support structured spectra of computational abstractions grounded in coherent representation and witness-full actual provenance; modal structure strengthens this into claims about alternative cases, while a deliberately actualist computational functionalism places present phenomenology primarily on independently grounded invariants of the generated process and rejects unrealized differences as sufficient phenomenal differences unless their constitutive role is separately argued.}
 }}
 \end{center}
 

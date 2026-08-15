@@ -10,19 +10,20 @@ Each document is provided both as a standalone LaTeX source and as a compiled PD
 
 ## Building the PDFs on Windows
 
-Install [MiKTeX](https://miktex.org/) or [TeX Live](https://tug.org/texlive/), then run:
+Install [MiKTeX](https://miktex.org/), [TeX Live](https://tug.org/texlive/), or [Tectonic](https://tectonic-typesetting.github.io/), then run:
 
 ```bat
 build.bat
 ```
 
-The script compiles all three documents in place. It prefers `latexmk` and falls back to two `pdflatex` passes. Generated auxiliary files are ignored by Git and removed after a successful build; the resulting PDFs remain in the repository root.
+The script compiles all three documents in place. It prefers `latexmk`, then two `pdflatex` passes, and otherwise uses `tectonic`. Generated auxiliary files are ignored by Git and removed after a successful build; the resulting PDFs remain in the repository root.
 
 ## Repository layout
 
 - `computational_identity_conceptual_note.tex` / `.pdf` - conceptual guide
 - `computational_identity_formal_theory.tex` / `.pdf` - formal theory
 - `computational_identity_state_of_the_art.tex` / `.pdf` - literature review
+- `RESEARCH_ROADMAP.md` - impact-prioritized research decisions and formal extensions that require work beyond local correction
 - `build.bat` - reproducible Windows build entry point
 
 Prepared August 2026.

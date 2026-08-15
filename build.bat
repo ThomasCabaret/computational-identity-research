@@ -4,6 +4,7 @@ pushd "%~dp0"
 
 set "LATEXMK="
 set "PDFLATEX="
+set "TECTONIC="
 
 where latexmk >nul 2>nul && set "LATEXMK=latexmk"
 if not defined LATEXMK if exist "%LOCALAPPDATA%\Programs\MiKTeX\miktex\bin\x64\latexmk.exe" set "LATEXMK=%LOCALAPPDATA%\Programs\MiKTeX\miktex\bin\x64\latexmk.exe"
@@ -11,11 +12,14 @@ if not defined LATEXMK if exist "%LOCALAPPDATA%\Programs\MiKTeX\miktex\bin\x64\l
 where pdflatex >nul 2>nul && set "PDFLATEX=pdflatex"
 if not defined PDFLATEX if exist "%LOCALAPPDATA%\Programs\MiKTeX\miktex\bin\x64\pdflatex.exe" set "PDFLATEX=%LOCALAPPDATA%\Programs\MiKTeX\miktex\bin\x64\pdflatex.exe"
 
+where tectonic >nul 2>nul && set "TECTONIC=tectonic"
+
 if defined LATEXMK goto :latexmk
 if defined PDFLATEX goto :pdflatex
+if defined TECTONIC goto :tectonic
 
-echo Error: neither latexmk nor pdflatex was found.
-echo Install MiKTeX or TeX Live, then run build.bat again.
+echo Error: latexmk, pdflatex, and tectonic were not found.
+echo Install MiKTeX, TeX Live, or Tectonic, then run build.bat again.
 goto :fail
 
 :latexmk
@@ -45,6 +49,18 @@ for %%F in (
   if errorlevel 1 goto :fail
 )
 del /q *.aux *.log *.out *.toc *.fls *.fdb_latexmk *.synctex.gz 2>nul
+goto :success
+
+:tectonic
+for %%F in (
+  computational_identity_conceptual_note.tex
+  computational_identity_formal_theory.tex
+  computational_identity_state_of_the_art.tex
+) do (
+  echo Building %%F...
+  "%TECTONIC%" -X compile "%%F"
+  if errorlevel 1 goto :fail
+)
 goto :success
 
 :success
