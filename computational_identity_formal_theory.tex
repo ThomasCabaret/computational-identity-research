@@ -1,0 +1,720 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=21mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{ragged2e}
+\usepackage{mathrsfs}
+
+\definecolor{navy}{RGB}{29,59,91}
+\definecolor{blue}{RGB}{53,105,151}
+\definecolor{sky}{RGB}{238,246,252}
+\definecolor{mint}{RGB}{239,248,243}
+\definecolor{sand}{RGB}{252,248,235}
+\definecolor{rose}{RGB}{252,241,241}
+\definecolor{violet}{RGB}{246,242,250}
+\definecolor{ink}{RGB}{50,50,50}
+\definecolor{midgray}{RGB}{105,105,105}
+
+\hypersetup{colorlinks=true,linkcolor=navy,citecolor=navy,urlcolor=navy,
+  pdftitle={Computational Identity: A Formal Theory of Occurrent and Modal Realization},
+  pdfsubject={Mathematical formalization of computational provenance, value representation, spectra, abstraction, and functionalist invariance constraints}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Computational Identity: Formal Theory}
+\fancyhead[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{navy}}{\thesubsection}{0.6em}{}
+\setlist[itemize]{topsep=4pt,itemsep=2.4pt,parsep=1pt,leftmargin=1.45em}
+\setlist[enumerate]{topsep=4pt,itemsep=2.8pt,parsep=1pt,leftmargin=1.65em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4.8pt}
+
+\newtheoremstyle{clean}{5pt}{5pt}{\itshape}{}{}{.}{0.6em}{}
+\theoremstyle{clean}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\newtcolorbox{intuitionbox}[1][]{enhanced,breakable,colback=sky,colframe=blue,boxrule=0.7pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Intuition},fonttitle=\bfseries,#1}
+\newtcolorbox{axiombox}[1][]{enhanced,colback=mint,colframe=navy,boxrule=0.8pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Axiom schema},fonttitle=\bfseries,#1}
+\newtcolorbox{cautionbox}[1][]{enhanced,breakable,colback=rose,colframe=ink,boxrule=0.65pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.6mm,bottom=1.6mm,title={Scope condition},fonttitle=\bfseries,#1}
+\newtcolorbox{summarybox}[1][]{enhanced,breakable,colback=sand,colframe=navy,boxrule=0.8pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Formal summary},fonttitle=\bfseries,#1}
+
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Real}{\operatorname{Real}}
+\newcommand{\Occ}{\mathrm{occ}}
+\newcommand{\Mod}{\mathrm{mod}}
+\newcommand{\Adm}{\operatorname{Adm}}
+\newcommand{\Supp}{\operatorname{Supp}}
+\newcommand{\MinSupp}{\operatorname{MinSupp}}
+\newcommand{\Core}{\operatorname{Core}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\dom}{\operatorname{dom}}
+\newcommand{\cod}{\operatorname{cod}}
+\newcommand{\pow}{\mathcal{P}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{navy} Computational Identity}\\[2mm]
+{\Large A Formal Theory of Occurrent and Modal Realization}\\[3mm]
+{\large Mathematical appendix to the conceptual guide}\\[3mm]
+{\small August 2026}
+\end{center}
+
+\begin{summarybox}[title={Purpose}]
+The formalism is designed to make four distinctions explicit. First, a function is not an algorithm, and an algorithm is not a particular execution. Second, an actual execution contains more structure than a sequence of global states: it contains represented values, event occurrences, and provenance. Third, a modal mechanism is stronger than an actual occurrence because it specifies behavior under unrealized inputs or interventions. Fourth, computational descriptions form a partially ordered family of abstractions rather than a single scalar ``level.''
+
+The theory therefore has two realization layers. \emph{Occurrent realization} maps a physical episode to a typed valued provenance structure using a coherent, trajectory-independent representation scheme. \emph{Modal realization} maps a physical mechanism to an abstract mechanism while preserving admissible interventions. Their abstractions generate structured spectra. A final section formalizes invariance constraints for computational-functionalist consciousness theories, with the consciousness-making property supplied by the substantive theory.
+\end{summarybox}
+
+\section{Preliminaries and design commitments}
+
+All structures are finite unless otherwise stated. This keeps the basic results elementary; measurable, stochastic, continuous-time, and infinite generalizations can be added later. We distinguish physical objects from abstract computational objects only by notation and typing, not by assuming a particular metaphysics of physical causation.
+
+A \emph{token} is an occurrence of a represented value. An \emph{event} consumes zero or more tokens and produces zero or more tokens. The event-token incidence structure records actual provenance. It does not, by itself, assert counterfactual necessity or philosophical actual causation.
+
+\begin{intuitionbox}
+The primitive occurrent question is: ``what values were actually produced, transmitted, and used by what events during this episode?'' The primitive modal question is stronger: ``what would this organized mechanism do under other admissible inputs or interventions?''
+\end{intuitionbox}
+
+\section{Typed valued provenance structures}
+
+\subsection{Bare provenance}
+
+\begin{definition}[Typed provenance structure]
+A \emph{typed provenance structure} is a tuple
+\[
+P=(E,T,\Theta,\tau,I,O,\prec)
+\]
+where:
+\begin{itemize}
+  \item $E$ is a finite set of event occurrences;
+  \item $T$ is a finite set of value-token occurrences;
+  \item $\Theta$ is a set of token types and $\tau:T\to\Theta$ assigns a type to each token;
+  \item $I\subseteq T\times E$ is the input incidence relation;
+  \item $O\subseteq E\times T$ is the output incidence relation;
+  \item $\prec$ is a strict partial order on $E\cup T$ containing the causal order generated by $tIe$, $eOt$, and any additional physically justified precedence relations.
+\end{itemize}
+We require acyclicity on the finite episode.
+\end{definition}
+
+The bipartite graph induced by $I$ and $O$ is the \emph{provenance graph}. A token may fan out to several events; an event may have several inputs and outputs. The order $\prec$ allows additional causal/temporal precedence without forcing all concurrent events into one total order.
+
+\begin{definition}[Valued provenance structure]
+For each type $\theta\in\Theta$, let $A_\theta$ be an abstract value set. A \emph{valued provenance structure} is a typed provenance structure together with
+\[
+\nu:T\to \bigsqcup_{\theta\in\Theta} A_\theta,
+\qquad \nu(t)\in A_{\tau(t)}.
+\]
+\end{definition}
+
+\subsection{Physical carriers and coherent representation}
+
+Let a physical episode provide, for each token occurrence $t$, a local physical carrier state $c(t)$ in a carrier space $C_{\tau(t)}$. The carrier state may be a voltage pattern, spike configuration, magnetic state, optical mode, or any other physically specified local vehicle.
+
+\begin{definition}[Representation scheme]
+A \emph{representation scheme} for token types $\Theta$ is a family of partial decoders
+\[
+D=(D_\theta)_{\theta\in\Theta},\qquad D_\theta:C_\theta\rightharpoonup A_\theta.
+\]
+It represents a physical token $t$ by $\nu(t)=D_{\tau(t)}(c(t))$ whenever the decoder is defined.
+\end{definition}
+
+\begin{definition}[Coherence]
+A representation scheme is \emph{coherent on an episode} if:
+\begin{enumerate}
+  \item the same decoder $D_\theta$ is used for every token of type $\theta$;
+  \item $D_\theta$ depends only on the admissible local carrier state and fixed type/context data, not on the absolute time index, future history, target answer, or global trajectory identifier;
+  \item where a type is transported through identity-preserving channels, decoding is stable under the declared physical equivalence of carrier realizations;
+  \item the family $D$ is fixed independently of the abstract trajectory one is attempting to prove after the fact.
+\end{enumerate}
+\end{definition}
+
+The precise admissibility class of local carrier decompositions is domain-dependent. We therefore write $D\in\Adm_D(P)$ and make the admissibility policy an explicit parameter of the theory.
+
+\begin{proposition}[Arbitrary time-indexed relabeling]
+Let $(x_0,\dots,x_n)$ be any finite physical state sequence with pairwise distinct states and let $(q_0,\dots,q_n)$ be any abstract state sequence of the same length. If decoders may depend on the time index, then there exists a decoder $D(i,x_i)=q_i$ mapping the first sequence to the second.
+\end{proposition}
+\begin{proof}
+Define $D$ exactly on the observed pairs $(i,x_i)$ by $D(i,x_i)=q_i$. No structural constraint is imposed, so the construction is immediate.
+\end{proof}
+
+\begin{proposition}[Stationary local encoding obstruction]
+Suppose a physical carrier state $c$ of a fixed type $\theta$ occurs at two token occurrences $t_1,t_2$ with $c(t_1)=c(t_2)=c$. Under a coherent deterministic decoder $D_\theta$, the two abstract values must coincide. Hence no target labeling with $\nu(t_1)\neq \nu(t_2)$ can be realized by that scheme.
+\end{proposition}
+\begin{proof}
+Both values equal $D_\theta(c)$.
+\end{proof}
+
+\begin{remark}
+This proposition does not prove that coherent decoding alone defeats every triviality construction. It proves a narrower point: the standard freedom to relabel each time slice independently is removed. Stronger anti-triviality conditions come from locality, provenance preservation, compositionality, and, for modal realization, intervention preservation.
+\end{remark}
+
+\section{Occurrent computation}
+
+\subsection{Abstract computational occurrences}
+
+\begin{definition}[Computational occurrence]
+A \emph{computational occurrence} is a valued provenance structure
+\[
+C=(E_C,T_C,\Theta_C,\tau_C,I_C,O_C,\prec_C,\nu_C)
+\]
+together with optional event labels $\lambda:E_C\to\Lambda$ that identify only the event information licensed at the occurrent level. At minimum, an event label may record arity and the actual input-output tuple. A total operation type is not required.
+\end{definition}
+
+Thus an event may be recorded only as the actual fact
+\[
+(a_1,\ldots,a_k)\mapsto(b_1,\ldots,b_m)
+\]
+without asserting what would happen on any other input tuple.
+
+\subsection{Occurrence morphisms}
+
+\begin{definition}[Provenance homomorphism]
+Let $P$ and $C$ be typed valued provenance structures. A \emph{provenance homomorphism} $h:P\to C$ consists of maps $h_E:E_P\to E_C$ and $h_T:T_P\to T_C$ such that:
+\begin{enumerate}
+  \item incidence is preserved: $tIe\Rightarrow h_T(t)Ih_E(e)$ and $eOt\Rightarrow h_E(e)Oh_T(t)$;
+  \item order is preserved: $x\prec_P y\Rightarrow h(x)\preceq_C h(y)$ whenever the images are distinct;
+  \item token types and represented values are preserved through the declared type/value maps;
+  \item any event labels declared semantically relevant are preserved.
+\end{enumerate}
+The morphism may identify multiple low-level events or tokens into one abstract event or token; this is the basic abstraction operation.
+\end{definition}
+
+\begin{definition}[Occurrent realization witness]
+Let $P$ be an ambient physical episode equipped with carrier states. An \emph{occurrent realization witness} of an abstract occurrence $C$ in an ambient physical episode $P$ is a tuple $(P'\hookrightarrow P,D,w)$ where $P'$ is an admissible selected subepisode, $D$ is a coherent representation scheme on $P'$, and
+\[
+w:P'_D\twoheadrightarrow C
+\]
+is a surjective admissible provenance homomorphism. The selection $P'$ may discard physical activity irrelevant to this witness, while preserving all declared incidence and precedence relations internal to the selected occurrence. We write
+\[
+P\models_{\Occ,w} C.
+\]
+\end{definition}
+
+Surjectivity says every abstract event and token is actually witnessed. The low-level episode may contain extra physical detail that is quotiented away.
+
+\begin{definition}[Occurrent realization category]
+For a physical episode $P$, let $\Real_\Occ(P)$ be the category whose objects are realization witnesses $(P'\hookrightarrow P,D,C,w)$ with $P\models_{\Occ,w} C$, and whose arrows
+\[
+(C,w)\longrightarrow(C',w')
+\]
+are admissible abstraction morphisms $q:C\to C'$ satisfying $w'=q\circ w$.
+\end{definition}
+
+\begin{intuitionbox}
+The category, rather than only the set of abstract computations, preserves \emph{witness information}. If two disjoint subsystems of $P$ both realize isomorphic copies of the same computation, they are two objects/witnesses before quotienting by isomorphism. This matters for multiplicity and later subject-individuation questions.
+\end{intuitionbox}
+
+\begin{definition}[Occurrent spectrum]
+The \emph{occurrent computational spectrum} $\Spec_\Occ(P)$ is the poset reflection of $\Real_\Occ(P)$ after quotienting objects by abstract isomorphism and ordering them by existence of an admissible abstraction morphism. We write
+\[
+[C]\preceq[D]
+\]
+when $D$ refines $C$, equivalently when there is an admissible abstraction $D\to C$.
+\end{definition}
+
+The spectrum is therefore a coarse summary of the richer witness category.
+
+\begin{theorem}[Downward closure]
+If $P\models_\Occ C$ and there is an admissible abstraction $q:C\to C'$, then $P\models_\Occ C'$.
+\end{theorem}
+\begin{proof}
+If $w:P'_D\to C$ witnesses realization, then $q\circ w:P'_D\to C'$ is an admissible realization witness by closure of admissible morphisms under composition.
+\end{proof}
+
+\begin{corollary}
+$\Spec_\Occ(P)$ is downward closed under admissible abstraction.
+\end{corollary}
+
+\subsection{Why a state sequence is too weak}
+
+Let $\operatorname{seq}(C)$ forget incidence and retain only a chosen total order of global states or values. This forgetful map is highly non-injective.
+
+\begin{proposition}[Provenance non-identifiability from state sequence]
+There exist non-isomorphic computational occurrences $C_1,C_2$ with identical state/output sequences $\operatorname{seq}(C_1)=\operatorname{seq}(C_2)$ but different provenance graphs.
+\end{proposition}
+\begin{proof}
+Let $C_1$ generate each next token from the previous token through a chain of events. Let $C_2$ generate every displayed token independently from a stored script or common clock. Choose identical displayed values. The sequences agree, but one provenance graph is a chain and the other is a star or set of independent reads; they are not isomorphic.
+\end{proof}
+
+This formalizes the movie-playback distinction: replaying snapshots is not automatically the same occurrent computation.
+
+\section{Local operations, partial laws, and value support}
+
+\subsection{Partial operation tables from actual repetitions}
+
+Suppose the same physical component identity $k$ participates in several events. Let $\kappa:E\to K$ assign component identities. For a component $k$, collect the actual input-output tuples observed across events with $\kappa(e)=k$.
+
+\begin{definition}[Empirical partial operation]
+The \emph{empirical partial operation} of component $k$ in episode $P$ is the partial relation/function
+\[
+\widehat f_k:\prod_i A_i\rightharpoonup \prod_j B_j
+\]
+whose graph consists exactly of the distinct actual input-output tuples observed at occurrences of $k$, provided repeated identical inputs have compatible outputs.
+\end{definition}
+
+This object is strictly occurrent: it says nothing about input tuples not encountered.
+
+\subsection{Value supports}
+
+Now suppose a local event type is enriched with a total operation
+\[
+f:\prod_{i=1}^n A_i\to B
+\]
+and the actual input is $a=(a_1,\dots,a_n)$ with output $y=f(a)$.
+
+\begin{definition}[Value support]
+A subset $S\subseteq\{1,\dots,n\}$ is a \emph{value support} for $(f,a,y)$ if
+\[
+\forall x\in\prod_i A_i:\quad \bigl(\forall i\in S,\ x_i=a_i\bigr)\Rightarrow f(x)=y.
+\]
+It is \emph{minimal} if no proper subset has the property. The family of minimal supports is
+\[
+\MinSupp(f,a)=\{S:S\text{ is minimal support for }f(a)\}.
+\]
+\end{definition}
+
+The minimal supports form a hypergraph over the actual input positions.
+
+\begin{example}[OR and AND]
+For $f=\mathrm{OR}$ and $a=(1,1,0)$ with output $1$,
+\[
+\MinSupp(f,a)=\bigl\{\{1\},\{2\}\bigr\}.
+\]
+For $g=\mathrm{AND}$ and $a=(1,1)$ with output $1$,
+\[
+\MinSupp(g,a)=\bigl\{\{1,2\}\bigr\}.
+\]
+\end{example}
+
+\begin{proposition}[Support is not purely occurrent]
+There exist total operations $f\neq g$ and an actual tuple $a$ such that $f(a)=g(a)$ and the primitive occurrent provenance/value record at $a$ is identical, while $\MinSupp(f,a)\neq\MinSupp(g,a)$.
+\end{proposition}
+\begin{proof}
+Take $f=\mathrm{OR}$ and $g=\mathrm{AND}$ at $a=(1,1)$. Both output $1$ on the actual tuple; the minimal supports differ as above.
+\end{proof}
+
+\begin{remark}
+Value support is \emph{occurrence-indexed but locally modal}: it refers only to actual assignments in $a$, yet sufficiency quantifies over unrealized assignments of the other coordinates. It must therefore not be conflated with primitive provenance.
+\end{remark}
+
+\subsection{Participation, support, contribution, dependence}
+
+We reserve four different relations:
+\begin{enumerate}
+  \item \textbf{Participation/provenance:} token $t$ was actually supplied to event $e$.
+  \item \textbf{Value support:} a set of actual assignments suffices for the actual output relative to a known local operation.
+  \item \textbf{Actual contribution:} an optional theory-specific relation $\mathsf{Contrib}(t,e,y)$ intended to capture causal/explanatory contribution. The core theory leaves its axioms open.
+  \item \textbf{Modal dependence:} the total local mechanism function depends on a variable across possible inputs/interventions.
+\end{enumerate}
+
+No theorem below requires identifying these relations.
+
+\section{Modal computational mechanisms}
+
+\subsection{Open synchronous mechanisms}
+
+\begin{definition}[Modular open mechanism]
+A deterministic synchronous \emph{modular open mechanism} is a tuple
+\[
+M=(V,U,Y,\{X_v\}_{v\in V},G,\{f_v\}_{v\in V},r)
+\]
+where:
+\begin{itemize}
+  \item $V$ is a finite set of internal variables/components;
+  \item $U$ and $Y$ are external input and output spaces;
+  \item $X_v$ is the state/value space of component $v$;
+  \item $G$ specifies, for each $v$, a parent set $\mathrm{Pa}(v)\subseteq V$ and selected input coordinates;
+  \item each local update $f_v$ maps current parent values and current external input to the next value of $v$;
+  \item $r$ maps the current/next internal state and input to an external output.
+\end{itemize}
+Together the local functions induce a global synchronous transition/output function
+\[
+F_M:X\times U\to X\times Y,\qquad X=\prod_{v\in V}X_v.
+\]
+\end{definition}
+
+This model captures open-system behavior while retaining internal factorization.
+
+\subsection{Interventions}
+
+An intervention may clamp variables, replace local mechanisms, set inputs, or perform another operation declared admissible for the system. Let $\mathcal J_M$ be a specified intervention language. Each $j\in\mathcal J_M$ induces an intervened mechanism $M^j$ and global evolution $F_M^j$.
+
+\begin{definition}[Modal abstraction/realization]
+Let $L$ be a low-level mechanism and $H$ a high-level mechanism. A \emph{modal realization morphism} $\rho:L\Rightarrow H$ consists of:
+\begin{enumerate}
+  \item a grouping/assignment of low-level variables to high-level variables;
+  \item state decoders $\phi:X_L\rightharpoonup X_H$ compatible with that grouping;
+  \item an intervention translation $\omega:\mathcal J_H\to\mathcal J_L$;
+\end{enumerate}
+such that for every admissible high-level intervention $j$, input $u$ and relevant low-level state $x$,
+\[
+\phi\bigl(\pi_X F_{L^{\omega(j)}}(x,u)\bigr)
+=\pi_XF_{H^j}(\phi(x),\eta(u)),
+\]
+and the corresponding outputs commute through an output decoder. The representation/grouping must satisfy the same admissibility principles of locality, coherence, and non-ad-hoc construction used at the occurrent level.
+\end{definition}
+
+This is a deterministic special case of intervention-preserving causal abstraction.
+
+\begin{definition}[Modal realization category and spectrum]
+$\Real_\Mod(L)$ has objects $(L'\hookrightarrow L,H,\rho)$, where $L'$ is an admissible selected submechanism of the ambient mechanism $L$ and $\rho:L'\Rightarrow H$ is a modal realization morphism. Arrows are admissible modal abstractions commuting with witnesses. Its poset reflection under isomorphism is the \emph{modal computational spectrum} $\Spec_\Mod(L)$.
+\end{definition}
+
+\begin{theorem}[Composition of modal realization]
+If $L\Rightarrow H$ and $H\Rightarrow K$ are admissible modal realization morphisms, then their composite is an admissible modal realization $L\Rightarrow K$.
+\end{theorem}
+\begin{proof}
+Compose state decoders, variable groupings, and intervention translations. The required commuting equation follows by substitution of the two commuting equations. Admissibility is assumed closed under composition.
+\end{proof}
+
+\begin{corollary}
+$\Spec_\Mod(L)$ is downward closed under modal abstraction.
+\end{corollary}
+
+\section{Relation between modal and occurrent realization}
+
+A concrete input stream and initial state determine a run of a modal mechanism. Unrolling the run yields an actual provenance structure if the internal event decomposition is retained.
+
+\begin{theorem}[Modal-to-occurrent projection]
+Let $L\Rightarrow H$ be a modal realization morphism and let $r$ be an actual run of $L$ under an admissible input/intervention sequence. Then the induced low-level occurrence realizes the corresponding unrolled high-level occurrence.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Restrict the modal commuting diagrams to the finite sequence of states and local events actually traversed by $r$. The state/value decoders and variable groupings provide the token mapping; preservation of local updates and outputs gives incidence/value preservation for the unrolled high-level event structure.
+\end{proof}
+
+\begin{theorem}[Occurrent underdetermination of modal mechanism]
+There exist modal mechanisms $M_1\not\cong M_2$ and runs $r_1,r_2$ whose induced computational occurrences are isomorphic.
+\end{theorem}
+\begin{proof}
+Take two one-step Boolean gates OR and AND and the actual input $(1,1)$. Both produce the same actual tuple $(1,1)\mapsto1$ with identical primitive provenance, while their modal transition tables differ on $(1,0)$ and $(0,1)$.
+\end{proof}
+
+\begin{corollary}
+Occurrent realization is strictly weaker than modal realization. A finite actual episode generally determines a set of compatible modal completions rather than a unique modal mechanism.
+\end{corollary}
+
+\begin{definition}[Compatible modal completion]
+For an occurrent structure $C$, a modal mechanism $M$ is a \emph{compatible completion} if some run of $M$ induces an occurrence isomorphic to $C$. Let
+\[
+\mathrm{Comp}(C)=\{[M]:M\text{ is a compatible modal completion of }C\}.
+\]
+\end{definition}
+
+Repeated actual uses of the same component shrink $\mathrm{Comp}(C)$ by expanding its empirical partial operation, but cannot in general make the completion unique without enough coverage or extra assumptions.
+
+\section{Abstraction geometry: refinement is not a scalar}
+
+\subsection{Refinement order}
+
+For either occurrent or modal spectra, define $A\preceq B$ when there exists an admissible abstraction $B\to A$. Thus $B$ is at least as fine as $A$.
+
+\begin{proposition}
+After quotienting by isomorphism, $\preceq$ is a partial order provided admissible abstractions satisfy identity, composition, and antisymmetry up to isomorphism.
+\end{proposition}
+
+\subsection{Independent local abstractions}
+
+Let a computation be a composition of components $A$ and $B$. Suppose component $A$ admits abstraction poset $L_A$ and $B$ admits $L_B$, and the choices can be made independently while preserving the external composition interface.
+
+\begin{theorem}[Product abstraction structure]
+Under the independence assumption, the combined abstraction poset contains a subposet isomorphic to $L_A\times L_B$ with componentwise order.
+\end{theorem}
+\begin{proof}
+Map a pair of local abstractions $(a,b)$ to the global computation obtained by applying $a$ to $A$ and $b$ to $B$. Independence gives well-defined composition. Refinement in one component while fixing the other induces the corresponding global refinement. The inverse reads off the two local abstraction choices.
+\end{proof}
+
+\begin{corollary}[Non-linearity of granularity]
+If both $L_A$ and $L_B$ contain a strict two-element chain, the global abstraction order contains incomparable elements: ``$A$ abstract, $B$ detailed'' and ``$A$ detailed, $B$ abstract.'' Hence computational granularity cannot in general be represented by one scalar level.
+\end{corollary}
+
+\subsection{Lattice conditions}
+
+\begin{proposition}
+If each local abstraction order $L_i$ is a lattice and local abstraction choices combine independently, then the product $\prod_iL_i$ is a lattice with meet and join computed componentwise.
+\end{proposition}
+
+The global spectrum need not be a lattice when abstractions interact or admissibility is non-compositional. ``Lattice'' is therefore a theorem under conditions, not part of the definition.
+
+\section{Function identity, algorithm identity, and nested substitution}
+
+\begin{definition}[Boundary transduction]
+For an open mechanism $M$, its \emph{boundary transduction} is the map from admissible initial state/input histories to output histories after hiding internal variables.
+\end{definition}
+
+Two mechanisms can have equal boundary transductions while differing internally. Extensional equality is therefore a coarse abstraction.
+
+\begin{example}[Triangular numbers]
+An iterative algorithm computing $1+\cdots+n$ and a closed-form algorithm computing $n(n+1)/2$ have the same total function on $n$ but non-isomorphic fine-grained occurrences and mechanisms.
+\end{example}
+
+\begin{definition}[Contextual interface equivalence]
+Let $A$ and $B$ be components exposing the same interface $\Gamma$. They are \emph{$\Gamma$-equivalent} if no admissible interaction expressible through $\Gamma$ distinguishes them at the specified occurrent or modal level.
+\end{definition}
+
+\begin{theorem}[Substitution/congruence]
+Let $K[-]$ be a context whose only interaction with its hole is through interface $\Gamma$. If $A\equiv_\Gamma B$ and the equivalence is a congruence for the composition operator, then
+\[
+K[A]\equiv K[B].
+\]
+\end{theorem}
+
+This theorem formalizes the case in which a larger program treats either summation routine as the same abstract subroutine even though their internals differ.
+
+\section{Cross-system spectral relations}
+
+Let $\mathfrak C$ be a universe of abstract computation isomorphism classes for a fixed admissibility policy.
+
+\begin{definition}[Spectral containment]
+For systems/episodes $P,Q$ at the same layer $\ell\in\{\Occ,\Mod\}$,
+\[
+P\sqsubseteq_\ell Q
+\quad\Longleftrightarrow\quad
+\Spec_\ell(P)\subseteq\Spec_\ell(Q).
+\]
+\end{definition}
+
+\begin{definition}[Spectral equivalence]
+$P\equiv^{\mathrm{spec}}_\ell Q$ iff $P\sqsubseteq_\ell Q$ and $Q\sqsubseteq_\ell P$.
+\end{definition}
+
+\begin{definition}[Common computational core]
+The \emph{common core} is
+\[
+\Core_\ell(P,Q)=\Spec_\ell(P)\cap\Spec_\ell(Q).
+\]
+For a family $\mathcal F$, define $\Core_\ell(\mathcal F)=\bigcap_{P\in\mathcal F}\Spec_\ell(P)$.
+\end{definition}
+
+These set-level relations intentionally forget witness multiplicity. When multiplicity matters, comparison should be performed in $\Real_\ell(P)$ and $\Real_\ell(Q)$ using embeddings, spans, or correspondences between witness categories.
+
+\begin{proposition}[Containment is a preorder on systems]
+$\sqsubseteq_\ell$ is reflexive and transitive. Quotienting systems by spectral equivalence yields a partial order.
+\end{proposition}
+
+\section{A stronger anti-triviality package}
+
+No single anti-triviality axiom is sufficient in all physical domains. The theory therefore treats admissibility as a conjunction of constraints rather than a single decisive mapping restriction.
+
+\begin{definition}[Admissible occurrent realization policy]
+An admissibility policy may require some or all of:
+\begin{enumerate}
+  \item \textbf{Stationarity/coherence:} decoders do not vary ad hoc by time or target trajectory.
+  \item \textbf{Locality:} represented values are decoded from declared carriers or bounded local structures, not from the entire history.
+  \item \textbf{Provenance preservation:} abstract dependencies are witnessed by actual production/use relations.
+  \item \textbf{Compositionality:} local encodings compose across repeated types and subcomputations.
+  \item \textbf{No answer smuggling:} the decoder may not contain the target output/factorization as an oracle unless that information is physically present in the declared carrier structure.
+  \item \textbf{Physical regularity:} carriers and event decompositions satisfy domain-specific stability or locality constraints.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Admissible modal realization policy]
+A modal policy adds intervention preservation across a declared intervention family, ruling out mappings that fit only the realized trajectory.
+\end{definition}
+
+\begin{cautionbox}
+The framework does not claim that there is a unique metaphysically privileged admissibility class for all sciences. It claims that implementation assertions are incomplete without such a class, and that many classic triviality constructions exploit precisely the omission of locality, stationarity, compositionality, provenance, or intervention constraints.
+\end{cautionbox}
+
+\section{Resource-sensitive extension}
+
+Let $R(M)\in\mathbb R_+^d$ be a resource vector for a realization: description length, memory, circuit size, depth, time, energy, bandwidth, locality cost, or any chosen coordinates. For a target abstract computation $C$ and resource region $B\subseteq\mathbb R_+^d$, define
+\[
+\mathcal R(C;B)=\{M: M\models C,\ R(M)\in B\}.
+\]
+
+\begin{definition}[Resource-constrained computational core]
+\[
+\Core(C;B)=\bigcap_{M\in\mathcal R(C;B)}\Spec(M),
+\]
+when the realization family is nonempty.
+\end{definition}
+
+\begin{theorem}[Budget monotonicity]
+Assume that both realization families are nonempty. If $B_1\subseteq B_2$, then
+\[
+\Core(C;B_1)\supseteq\Core(C;B_2).
+\]
+\end{theorem}
+\begin{proof}
+$\mathcal R(C;B_1)\subseteq\mathcal R(C;B_2)$. Intersecting spectra over a smaller family can only enlarge the intersection.
+\end{proof}
+
+This is the rigorous form of the intuition that tightening resources can make some internal computational structure unavoidable. It does \emph{not} imply convergence to the structure of a chosen reference implementation.
+
+\begin{definition}[Reference-relative overlap profile]
+For a reference realization $M_0$ of $C$, let $B(b)$ be the resource region induced by a scalar threshold $b$. For a chosen overlap measure $\mu$, define
+\[
+\mathcal O_{M_0,C}(b)=\inf_{M\in\mathcal R(C;B(b))}\mu\bigl(\Spec(M_0)\cap\Spec(M)\bigr).
+\]
+\end{definition}
+
+The shape of this profile expresses spectral rigidity or degeneracy under compression/resource constraints.
+
+\section{Formal constraints for computational functionalism}
+
+This section defines a class of computational-functionalist theories that respect the conceptual constraints motivated in the companion note. The computational basis of consciousness is the hypothesis under study, while the formalism specifies the invariances that such a hypothesis must satisfy.
+
+\subsection{Phenomenal assignment}
+
+Let $\mathcal E$ be a class of physical episodes and $\mathcal H$ a set of phenomenal states, phenomenal structures, or equivalence classes thereof. A computational-functionalist theory supplies a partial map
+\[
+\Phi:\mathcal E\rightharpoonup\mathcal H
+\]
+whose domain contains candidate conscious episodes. The substantive consciousness theory specifies which computational invariant determines $\Phi$. The present framework constrains only the invariances of that dependence.
+
+Let $\mathcal A(P)$ denote the consciousness-relevant actual computational structure extracted from $\Real_\Occ(P)$ or $\Spec_\Occ(P)$. The extraction rule may retain some abstractions and discard others, but must itself satisfy the invariance axioms below.
+
+\begin{axiombox}[title={F1. Phenomenal Actuality}]
+If two episodes have isomorphic consciousness-relevant actual computational structures,
+\[
+\mathcal A(P)\cong\mathcal A(Q),
+\]
+then $\Phi(P)=\Phi(Q)$, absent an independently stated non-computational variable.
+\end{axiombox}
+
+\begin{axiombox}[title={F2. Counterfactual Irrelevance}]
+Let mechanisms $M_1,M_2$ generate episodes $P_1,P_2$ with $\mathcal A(P_1)\cong\mathcal A(P_2)$. If $M_1$ and $M_2$ differ only on modal transitions not instantiated in those episodes, then the modal difference alone does not alter $\Phi$:
+\[
+\Phi(P_1)=\Phi(P_2).
+\]
+\end{axiombox}
+
+\begin{axiombox}[title={F3. Representation Invariance}]
+If $Q$ is obtained from $P$ by a coherent bijective recoding of represented values and corresponding relabeling of event types that preserves the actual computational structure, then $\Phi(Q)=\Phi(P)$.
+\end{axiombox}
+
+\begin{axiombox}[title={F4. Substrate Invariance}]
+If two physical episodes realize the same consciousness-relevant actual computational structure under admissible realization witnesses, differences in substrate alone do not change $\Phi$.
+\end{axiombox}
+
+\begin{axiombox}[title={F5. Inert-extension Invariance}]
+If $Q$ is obtained from $P$ by adjoining physical or modal structure with no witness path into the consciousness-relevant actual computation of the episode, then $\Phi(Q)=\Phi(P)$.
+\end{axiombox}
+
+\begin{axiombox}[title={F6. Abstraction Consistency}]
+Replacing one spectral description of a fixed physical realization by an isomorphic or consciousness-irrelevantly refined description does not create a new phenomenal episode. Phenomenal multiplicity is indexed by realization witnesses/subsystems, not by the number of descriptions in the spectrum.
+\end{axiombox}
+
+\begin{axiombox}[title={F7. Capacity--Occurrence Separation}]
+Phenomenal capacity is permitted to depend on $\Spec_\Mod(M)$, but present phenomenal character $\Phi(P)$ is determined by the actual episode through $\mathcal A(P)$ unless the theory explicitly promotes a modal property to constitutive status.
+\end{axiombox}
+
+\subsection{Generative sensitivity is permitted, not snapshot identity}
+
+A theory satisfying F1--F7 may distinguish two episodes with identical snapshot sequences if their actual provenance differs. Formally, $\Phi$ is not required to factor through the forgetful map $P\mapsto\operatorname{seq}(P)$; it is instead allowed to factor through the richer occurrent realization structure.
+
+\begin{proposition}[Movie playback is not forced equivalent]
+F1--F7 do not imply phenomenal equivalence between an actually generated computational chain and a scripted replay with the same state sequence when their consciousness-relevant provenance structures are non-isomorphic.
+\end{proposition}
+\begin{proof}
+F1 applies only when the consciousness-relevant actual computational structures are isomorphic. Identical state sequences do not imply provenance isomorphism by the provenance non-identifiability proposition above.
+\end{proof}
+
+\subsection{OR-to-AND off-trajectory replacement}
+
+\begin{proposition}[Off-trajectory gate replacement]
+Suppose an episode $P$ contains a gate occurrence with actual input $(1,1)$ and output $1$, and $Q$ is identical in consciousness-relevant actual provenance/value structure except that the underlying total local mechanism is changed from OR to AND. If the total operation type and value-support hypergraph are not included in $\mathcal A$, then F2 entails $\Phi(P)=\Phi(Q)$.
+\end{proposition}
+\begin{proof}
+The actual computational structure $\mathcal A$ is unchanged by hypothesis. OR and AND differ only on unrealized local inputs for this occurrence. F2 applies.
+\end{proof}
+
+\begin{remark}
+If a candidate theory includes value-support structure or local operation type in $\mathcal A$, then the two episodes may differ. The burden then shifts to that theory to justify why the locally counterfactual distinction is constitutive of present phenomenology rather than merely diagnostic of modal capacity.
+\end{remark}
+
+\subsection{Actual-process functionalism}
+
+\begin{definition}[Actual-process computational functionalism]
+A computational-functionalist theory is \emph{actual-process} if $\Phi$ factors through an invariant of $\Real_\Occ(P)$ (possibly after admissible quotienting) and satisfies F2: purely off-trajectory modal changes do not alter present phenomenal character.
+\end{definition}
+
+The substantive theory selects the consciousness-making invariant; this definition constrains the type of dependence it may express.
+
+\section{Open problems exposed by the formalism}
+
+\subsection{Admissible factorization and variable choice}
+
+The theory assumes an admissible decomposition into carriers, tokens, events, and components. Arbitrary coordinate transformations can destroy locality or manufacture it. A mature physical theory must therefore define admissible factorization using independently motivated physical criteria: locality, causal separability, stability, interaction boundaries, or dynamical modularity.
+
+\subsection{Subject individuation and overlapping witnesses}
+
+$\Spec_\Occ(P)$ alone loses multiplicity. The witness category $\Real_\Occ(P)$ retains it, but a consciousness theory still needs a rule deciding when two overlapping consciousness-bearing witnesses correspond to one subject, two subjects, or nested descriptions of one subject. Subject individuation is therefore a distinct layer of the theory.
+
+\subsection{Temporal metric}
+
+The provenance order records order and partial concurrency but not necessarily metric time. A theory may enrich events with durations or delays. Whether uniform slowdown, timing jitter, or temporal rescaling changes computational or phenomenal identity depends on which temporal quantities are retained by the relevant abstraction.
+
+\subsection{Approximate and stochastic realization}
+
+Exact commutation is too strong for noisy brains and approximate simulations. One extension replaces equality by a metric/divergence bound and exact morphisms by $\varepsilon$-realizations. Stochastic mechanisms replace local functions with kernels and require intervention-preserving equality or approximation of distributions.
+
+\section{Compact axiomatics}
+
+The computational theory can be reconstructed from the following scheme.
+
+\begin{enumerate}
+  \item A physical episode is decomposed into local carriers, token occurrences, event occurrences, and actual provenance.
+  \item A coherent representation scheme assigns abstract values to carrier states without trajectory-indexed relabeling.
+  \item An occurrent computation is a typed valued provenance quotient witnessed by an admissible homomorphism.
+  \item The category of all such witnesses generates an occurrent spectrum ordered by abstraction/refinement.
+  \item Repeated actual component uses induce partial operation tables; total local operation semantics may optionally induce value-support hypergraphs.
+  \item A modal mechanism specifies total transition rules and admissible interventions. Modal realization requires abstraction to commute across those interventions.
+  \item Every modal realization projects to corresponding occurrent realizations on actual runs; the converse fails in general.
+  \item Local abstractions compose when their interfaces support congruence; independent local choices generate product-like, non-linear refinement orders.
+  \item Cross-system relations are defined by spectral containment, equivalence, and common core, while witness categories preserve multiplicity.
+  \item Resource constraints define nested families of realizations and monotone resource-constrained common cores.
+  \item A disciplined computational functionalism assigns present phenomenality to invariants of actual computational realization and treats purely unrealized modal differences as non-constitutive by default.
+\end{enumerate}
+
+\begin{summarybox}[title={One-line formal picture}]
+For a physical episode $P$ and mechanism $M$,
+\[
+\Real_\Occ(P)\longrightarrow\Spec_\Occ(P),\qquad
+\Real_\Mod(M)\longrightarrow\Spec_\Mod(M),
+\]
+with modal realization projecting to occurrent realization on each run, spectra ordered by admissible abstraction, and computational functionalism represented by invariant maps on the witness/spectral structure of actual episodes rather than by arbitrary state labeling or bare input-output equality.
+\end{summarybox}
+
+\section*{Selected references}
+
+\begin{thebibliography}{20}
+\bibitem{Chalmers1994} D. J. Chalmers. On implementing a computation. \emph{Minds and Machines}, 4:391--402, 1994.
+\bibitem{Chalmers1996} D. J. Chalmers. Does a rock implement every finite-state automaton? \emph{Synthese}, 108:309--333, 1996.
+\bibitem{Piccinini2015} G. Piccinini. \emph{Physical Computation: A Mechanistic Account}. Oxford University Press, 2015.
+\bibitem{AndersonPiccinini2024} N. G. Anderson and G. Piccinini. \emph{The Physical Signature of Computation}. Oxford University Press, 2024.
+\bibitem{Gurevich2000} Y. Gurevich. Sequential Abstract-State Machines capture sequential algorithms. \emph{ACM TOCL}, 1(1):77--111, 2000.
+\bibitem{Blass2009} A. Blass, N. Dershowitz, and Y. Gurevich. When are two algorithms the same? \emph{Bulletin of Symbolic Logic}, 15(2):145--168, 2009.
+\bibitem{Cousot1977} P. Cousot and R. Cousot. Abstract interpretation: a unified lattice model for static analysis. \emph{POPL}, 1977.
+\bibitem{Winskel1987} G. Winskel. Event structures. LNCS 255, Springer, 1987.
+\bibitem{AgrawalHorgan1990} H. Agrawal and J. R. Horgan. Dynamic program slicing. \emph{PLDI}, 1990.
+\bibitem{Cheney2010} J. Cheney. Causality and the semantics of provenance. arXiv:1004.3241, 2010.
+\bibitem{BeckersHalpern2019} S. Beckers and J. Y. Halpern. Abstracting causal models. \emph{AAAI}, 2019.
+\bibitem{Geiger2025} A. Geiger et al. Causal abstraction: a theoretical foundation for mechanistic interpretability. \emph{JMLR}, 26(83):1--64, 2025.
+\bibitem{MaKanai2026} S. Ma and R. Kanai. Intrinsic Computational Functionalism. arXiv:2606.06424, 2026.
+\bibitem{KanaiMa2026} R. Kanai and S. Ma. Intrinsic Computational Functionalism and simulated consciousness. arXiv:2606.15348, 2026.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,263 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=22mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{ragged2e}
+\usepackage{longtable}
+
+\definecolor{navy}{RGB}{29,59,91}
+\definecolor{blue}{RGB}{53,105,151}
+\definecolor{sky}{RGB}{238,246,252}
+\definecolor{mint}{RGB}{239,248,243}
+\definecolor{sand}{RGB}{252,248,235}
+\definecolor{rose}{RGB}{252,241,241}
+\definecolor{violet}{RGB}{246,242,250}
+\definecolor{ink}{RGB}{50,50,50}
+\definecolor{midgray}{RGB}{105,105,105}
+\definecolor{lightgray}{RGB}{247,248,249}
+
+\hypersetup{
+  colorlinks=true,linkcolor=navy,citecolor=navy,urlcolor=navy,
+  pdftitle={Computational Identity: State of the Art},
+  pdfsubject={A literature map for physical computation, algorithm identity, abstraction, actual execution, and computational functionalism}
+}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Computational Identity: State of the Art}
+\fancyhead[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{navy}}{\thesubsection}{0.6em}{}
+\setlist[itemize]{topsep=4pt,itemsep=2.5pt,parsep=1pt,leftmargin=1.45em}
+\setlist[enumerate]{topsep=4pt,itemsep=3pt,parsep=1pt,leftmargin=1.65em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+\newtcolorbox{mapbox}[1][]{enhanced,breakable,colback=sky,colframe=blue,boxrule=0.75pt,arc=1.5mm,left=2.5mm,right=2.5mm,top=1.8mm,bottom=1.8mm,title={Literature map},fonttitle=\bfseries,#1}
+\newtcolorbox{gapbox}[1][]{enhanced,breakable,colback=sand,colframe=navy,boxrule=0.8pt,arc=1.5mm,left=2.5mm,right=2.5mm,top=1.8mm,bottom=1.8mm,title={Gap exposed},fonttitle=\bfseries,#1}
+\newtcolorbox{cautionbox}[1][]{enhanced,breakable,colback=rose,colframe=ink,boxrule=0.65pt,arc=1.5mm,left=2.5mm,right=2.5mm,top=1.8mm,bottom=1.8mm,title={Caution},fonttitle=\bfseries,#1}
+\newtcolorbox{takeawaybox}[1][]{enhanced,breakable,colback=mint,colframe=navy,boxrule=0.75pt,arc=1.5mm,left=2.5mm,right=2.5mm,top=1.8mm,bottom=1.8mm,title={What this contributes to the package},fonttitle=\bfseries,#1}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries\color{navy} Computational Identity: State of the Art}\\[2mm]
+{\Large Physical implementation, algorithm identity, abstraction, actual execution, and functionalism}\\[3mm]
+{\large Contextual literature review for the Computational Identity research package}\\[3mm]
+{\small August 2026}
+\end{center}
+
+\begin{mapbox}[title={Scope and purpose}]
+This literature review situates the package's proposed theory within the mature fields from which it draws: physical implementation and triviality, the distinction between functions and algorithms, operational semantics and behavioral equivalence, abstraction and causal abstraction, event-based accounts of actual execution, provenance and actual causation, and computational functionalism in consciousness research.
+
+The central historical fact is that these problems have mostly been studied in separate communities. Philosophy of computation asks when a physical system implements a computation; semantics asks when programs or processes are behaviorally equivalent; algorithm theory asks what an algorithm is beyond the function it computes; abstract interpretation organizes loss of detail; causal abstraction asks when a high-level causal model is faithfully realized by a low-level one; concurrency and provenance study the structure of particular executions. The package's distinctive move is to combine these ingredients into one ontology of computational realization and then use that ontology to discipline computational functionalism.
+\end{mapbox}
+
+\section{The implementation problem: when does a physical system compute?}
+
+The modern philosophical problem begins from a simple tension. Computation appears physically instantiated: a processor, brain, relay network, or mechanical calculator can objectively succeed or fail at a specified computation. Yet an abstract computation is not itself a physical object. Some relation must connect physical states and transitions to abstract states and transitions. If that relation is allowed to be an arbitrary mapping, the notion threatens to become trivial.
+
+Putnam's permutation and realization arguments helped crystallize the worry that sufficiently liberal mappings can make ordinary physical systems appear to implement arbitrary finite automata \cite{Putnam1988}. Chalmers responded by requiring an implementation relation that respects causal structure rather than merely matching a sequence of states after the fact \cite{Chalmers1994,Chalmers1996}. His combinatorial-state account is especially relevant because computational states are decomposed into substates with values, and physical causal relations are required to mirror the transition structure of the abstract automaton. This makes implementation a claim about organized counterfactual transition structure, not a post-hoc renaming of a history.
+
+Sprevak's discussion of triviality arguments emphasizes that the problem is not eliminated simply by insisting that there is some mapping from physical to computational states: the admissibility conditions on mappings do substantive work \cite{Sprevak2012,Sprevak2018}. More recent work continues to debate how determinate computational implementation really is. Fresco, Copeland, and Wolf defend a form of indeterminacy \cite{Fresco2021}; Curtis-Trudel argues for more determinate accounts based on resemblance and implementation constraints \cite{CurtisTrudel2021,CurtisTrudel2022}; Klein argues that much apparent indeterminacy should be understood in terms of isomorphic computational structures rather than as an absence of objective computational facts \cite{Klein2026}.
+
+\subsection{Mechanistic and robust-mapping accounts}
+
+Piccinini's mechanistic theory treats computation as a property of physical mechanisms that manipulate medium-independent vehicles according to rules sensitive to differences among their states \cite{Piccinini2015}. The emphasis shifts from a freely chosen mathematical mapping to organized components, activities, and functional roles. Horsman, Stepney, Wagner, and Kendon similarly analyze physical computation through a representation relation linking an abstract model to a physical evolution and back, with explicit attention to the direction of use and prediction \cite{Horsman2014}.
+
+Anderson and Piccinini's robust mapping account is the most recent book-length attempt to preserve the useful mapping idea while excluding pathological realizations. A physical system implements a computing system only when it satisfies a robust computational description that captures the physical signature of the computation, not merely a coincidental sequence of state correspondences \cite{AndersonPiccinini2024}. The resulting literature converges on a broad lesson: implementation needs structure-preserving constraints stronger than trajectory matching.
+
+\begin{takeawaybox}
+The package inherits the anti-triviality lesson but separates two questions that are often fused: what can be said about a \emph{particular actual episode} without counterfactual assumptions, and what stronger claim is required to say that a \emph{mechanism} implements a total computation across alternative cases. This motivates distinct occurrent and modal realization notions.
+\end{takeawaybox}
+
+\section{A function is not an algorithm}
+
+A second literature addresses a different ambiguity. Two procedures may compute the same mathematical function while differing systematically in internal structure, intermediate states, resources, or method. If ``the computation'' is identified with the extensional input-output function, these differences disappear by definition.
+
+Moschovakis explicitly treats the foundations of algorithm theory as a problem distinct from computability theory. His recursor-based account records computational structure that is erased when one keeps only the function computed \cite{Moschovakis2001}. Gurevich's Abstract State Machine program similarly seeks an implementation-independent representation of sequential algorithms. The Sequential ASM Thesis is grounded in postulates of sequential time, abstract states, and bounded exploration, and shows that algorithms satisfying these postulates are captured step-for-step by abstract state machines \cite{Gurevich2000}.
+
+Blass, Dershowitz, and Gurevich then confront the identity question directly: when are two algorithms the same? Their analysis is valuable partly because it resists the expectation that there is one simple extensional equivalence relation answering every use of ``same algorithm'' \cite{Blass2009}. Algorithm identity depends on what structural features are taken as constitutive.
+
+The elementary example used throughout the companion note captures this point. Summing the integers from $1$ to $n$ by iteration and evaluating $n(n+1)/2$ compute the same function. They are nevertheless different procedures. Conversely, when either procedure occurs inside a larger program that sees only the subroutine's input and output, the larger program may abstract away the difference. This is the first indication that computational identity is relative to an abstraction relation, while the truth of a specified identity claim can remain objective.
+
+\begin{gapbox}
+The algorithm literature establishes that algorithms are richer than functions. A general ontology connecting physical episodes, nested local abstractions, modal mechanisms, and families of simultaneously valid computational descriptions additionally requires tools from semantics and abstraction theory.
+\end{gapbox}
+
+\section{Operational semantics, transition systems, and bisimulation}
+
+Programming-language semantics supplies a mature answer to a question closely related to computational identity: how should one represent the internal dynamics of a program rather than only its denotation? Plotkin's Structural Operational Semantics represents execution through transitions between configurations, allowing a language's meaning to be specified by rules governing local steps \cite{Plotkin1981}. This provides a natural home for distinctions between two programs with the same input-output function but different intermediate behavior.
+
+Transition-system theory and process calculi then ask when two dynamic systems should count as behaviorally equivalent. Bisimulation is one of the central answers. Roughly, two states are bisimilar when each transition of one can be matched by a transition of the other in a way that preserves the relation recursively. Coalgebra provides a highly general setting in which state-based systems and behavioral equivalence can be treated uniformly \cite{Rutten2000}. In compositional settings, equivalence must also be a congruence: replacing a component by an equivalent component should preserve equivalence of the whole. Work such as Leifer and Milner's derivation of bisimulation congruences makes this substitution principle explicit \cite{LeiferMilner2000}.
+
+These ideas map directly onto the nested-subroutine problem. If two subroutines are equivalent at a specified interface and the enclosing context can interact with them only through that interface, substitution should preserve the abstract behavior of the enclosing system. If the context can inspect timing, memory traces, or intermediate states, the equivalence becomes finer.
+
+\begin{takeawaybox}
+The package treats ``same computation'' not as one primitive relation but as a family of equivalences generated by admissible abstractions. Congruence then becomes the formal condition that makes local abstraction usable inside larger computations.
+\end{takeawaybox}
+
+\section{Abstraction, refinement, and non-linear granularity}
+
+The natural mathematical language for ``forgetting some distinctions while preserving others'' is abstraction. Cousot and Cousot's abstract interpretation develops a lattice-theoretic framework in which concrete and abstract semantic domains are related systematically, often through Galois connections \cite{Cousot1977}. Although abstract interpretation was created for static analysis rather than metaphysics of computation, its central insight is directly relevant: abstraction is structured information loss, and abstractions themselves can be ordered by precision.
+
+This matters because computational granularity is generally not one-dimensional. If a system has components $A$ and $B$, one may retain the internals of $A$ while abstracting $B$, or do the reverse. These two descriptions are usually incomparable. Under independence assumptions, local abstraction orders combine approximately as products, generating the familiar diamond shape of a lattice rather than a single chain from ``micro'' to ``macro''.
+
+The refinement relation is therefore best treated as a partial order. One description refines another when it preserves all the distinctions of the coarser description and possibly more. Meets, joins, or quotient lattices may exist under additional structural assumptions, but they should not be postulated universally.
+
+\section{Causal abstraction and intervention-preserving realization}
+
+Causal-model abstraction gives a particularly powerful formalization of high-level realization. Rubenstein et al. introduced exact transformations between structural causal models that preserve interventionally relevant predictions across levels \cite{Rubenstein2017}. Beckers and Halpern developed a more systematic account of abstraction between causal models, including mappings between low- and high-level variables and interventions \cite{BeckersHalpern2019}.
+
+Geiger and collaborators have recently turned causal abstraction into a general foundation for mechanistic interpretability: a high-level computational explanation is faithful when interventions on high-level variables correspond to suitable low-level interventions and the resulting behavior commutes across the abstraction map \cite{Geiger2025}. Geiger, Harding, and Icard explicitly connect this framework back to classical philosophical questions about computational implementation and representation \cite{GeigerHardingIcard2026}.
+
+This literature strongly supports the modal side of the package's theory. An intervention-preserving abstraction can say that a physical mechanism implements an abstract computation across alternative cases, not merely along one observed run. It also clarifies why a counterfactual dimension is difficult to avoid when the claim concerns a complete mechanism rather than an actual occurrence.
+
+\begin{cautionbox}
+Causal abstraction should not be confused with an account of a single actual execution. An intervention-preserving mapping intentionally quantifies over alternative interventions. That is exactly its strength for modal realization, but it is too strong if the target question is only what computational structure was actually instantiated during a finite episode.
+\end{cautionbox}
+
+\section{Actual executions: event structures, occurrence, and dynamic dependence}
+
+Concurrency theory provides an object that lies between a bare state sequence and a complete counterfactual machine. Winskel's event structures represent a computational process by event occurrences together with causal dependency and conflict relations \cite{Winskel1987}. The key conceptual shift is from a total time-ordered list of global states to a partial order of events: independent events need not be artificially ordered, and causal ancestry can be represented directly.
+
+Dynamic program analysis makes a parallel distinction. Agrawal and Horgan's dynamic slicing constructs dependence information for a particular execution rather than all possible executions \cite{AgrawalHorgan1990}. A dynamic dependence graph records data and control dependencies that actually arise during the run. Such structures are strictly richer than an input-output trace or list of machine snapshots while remaining indexed to one actual history.
+
+Provenance research generalizes the idea of recording how outputs were derived from inputs. Cheney emphasizes that provenance, influence, dependence, explanation, and causality should not be treated as synonyms; causal semantics can be layered on top of provenance structures rather than assumed automatically \cite{Cheney2010}. This distinction is central to the package. An actual provenance edge can mean that a token was supplied to an operation and used in the physical derivation without yet asserting that the token was a necessary or actual cause of the output under a counterfactual test.
+
+\begin{takeawaybox}
+The package's occurrent object is closest in spirit to a typed, valued provenance/event structure: actual events, actual value tokens, actual production and consumption relations, and partial order. This primitive structure remains distinct from both a complete modal transition system and a philosophical theory of actual causation.
+\end{takeawaybox}
+
+\section{Participation, value support, actual causation, and modal dependence}
+
+Once an actual execution is represented causally, a new ambiguity appears: what should an edge mean? Consider an OR gate with actual inputs $(\mathrm{true},\mathrm{true},\mathrm{false})$ and output $\mathrm{true}$. All three signals physically arrive at the gate, so all three participate in provenance. Yet the false input does not help establish the true output in the same way as either true input.
+
+Boolean-function complexity provides a precise local notion here. Certificate complexity is a standard decision-tree measure; see the survey by Buhrman and de Wolf \cite{BuhrmanDeWolf2002}. A certificate for the value of a Boolean function at a particular input is a set of input assignments that suffices to force that output regardless of unspecified coordinates; certificate complexity measures the smallest such set. The package generalizes the same idea under the name \emph{value support}. For OR at $(1,1,0)$, either singleton assignment $x_1=1$ or $x_2=1$ is a minimal support for the output $1$. For AND at $(1,1)$, the two true assignments are jointly required.
+
+This notion must be classified carefully. A support is indexed to an actual occurrence and contains only values that actually occurred, but testing sufficiency requires knowledge of the local operation on unrealized inputs. It is therefore locally modal. It is neither primitive provenance nor purely actual causation.
+
+Actual-causation research shows why a further distinction is needed. Halpern-Pearl-style theories and descendants aim to identify which actual events count as causes of a particular outcome, confronting overdetermination and preemption. Provenance work has explicitly studied the relation between derivation graphs and such causal notions \cite{Cheney2010}. Meliou et al. develop functional causality for database explanations and degrees of responsibility \cite{Meliou2010}. These approaches demonstrate that ``participated'', ``was sufficient'', ``was necessary'', and ``was an actual cause'' are mathematically and philosophically distinct.
+
+\begin{gapbox}
+A common informal phrase such as ``the causal graph of the computation'' hides several different relations. The package separates at least: (i) actual provenance/participation, (ii) locally modal value support, (iii) optional actual-contribution relations, and (iv) modal dependence of the mechanism. No single edge type is asked to do all four jobs.
+\end{gapbox}
+
+\section{Canonical behavioral structures and the return of counterfactuals}
+
+There is a natural canonical construction for open deterministic systems: identify states that cannot be distinguished by any future sequence of inputs and observations. This is closely related to automata minimization and Myhill--Nerode-style quotienting. In 2026, Kanai and Ma's Canonical Functionalism explicitly uses complete future input-output roles to construct a minimal functional state-transition structure intended to avoid observer-relative semantic mappings \cite{KanaiMaCanonical2026}.
+
+The appeal is clear: arbitrary state labels disappear, and equivalent states are identified by their complete behavioral role. The cost is equally clear: the definition is thoroughly counterfactual. State identity depends on all possible future interactions, including those not actually realized.
+
+The package therefore treats canonical modal quotients as important but not exhaustive. They belong to the modal spectrum. A separate occurrent spectrum is needed for claims about a particular realized episode that should not automatically depend on unactualized alternatives.
+
+\section{Computational functionalism and consciousness}
+
+Computational functionalism about consciousness adds a psychophysical thesis to a theory of computation: some computational or functional organization is supposed to be sufficient, constitutive, or invariant for phenomenology. Chalmers's organizational invariance and fading/dancing qualia arguments are classic attempts to motivate the preservation of experience under sufficiently fine-grained functional isomorphism \cite{Chalmers1996ConsciousMind,Chalmers1995AbsentQualia}.
+
+The difficulty is that ``functional organization'' can mean very different things. It may mean external input-output behavior, a complete modal transition table, a causal network of internal mechanisms, or an actually realized computational process. Thought experiments such as Maudlin's Olympia target views on which inactive or counterfactual machinery can determine whether a replay-like system is conscious \cite{Maudlin1989}. More recently, the unfolding argument challenges consciousness theories that assign different consciousness to systems with the same input-output behavior solely because their internal causal architecture differs \cite{Doerig2019}. The argument does not settle which architecture is correct, but it exposes the empirical and conceptual cost of making phenomenology depend on structures that behavior cannot reveal.
+
+The 2026 Intrinsic Computational Functionalism program by Ma and Kanai is directly relevant. It argues that observer-relative mappings are inadequate and that consciousness-relevant computational organization, if any, must be intrinsic to the system's causal-dynamical structure and invariant under structure-preserving relabelings \cite{MaKanai2026}. Canonical Functionalism proposes a minimal counterfactual behavioral structure \cite{KanaiMaCanonical2026}; a subsequent paper argues that pure input-output canonicalization is too weak for lookup-table and unfolding cases and enriches the representation with internal mechanisms, interventions, and readouts \cite{KanaiMaICCR2026}. These papers are recent preprints and should be treated as an active research program rather than settled consensus.
+
+\begin{takeawaybox}
+The companion conceptual note takes a more actualist default than strongly counterfactual functionalism: present phenomenology should depend primarily on invariants of the computation actually generated during the episode. Modal structure remains crucial for capacities and may be added when independently motivated, but off-trajectory differences should not change present phenomenology by themselves.
+\end{takeawaybox}
+
+\section{Lookup tables, compression, and resource-sensitive structure}
+
+Lookup-table thought experiments expose another distinction. An enormous table can realize the same global state-transition function as a highly structured mechanism while sharing little of its internal decomposition. Function identity therefore does not imply algorithmic or spectral identity.
+
+Complexity theory supplies the general background: a truth table may require exponential description size even when a function has a compact circuit or program. Binary decision diagrams demonstrate how canonical or reduced representations can compress structured Boolean functions dramatically, though worst-case exponential blowups remain \cite{Bryant1986}. Algorithmic information theory similarly distinguishes raw description length from exploitable regularity. These traditions support a resource-sensitive extension of computational identity: as admissible resource budgets shrink, some implementations disappear, and structural features common to all remaining realizations may become unavoidable.
+
+As an optional extension, this perspective suggests notions such as resource-constrained computational core and spectral rigidity. Compression does not in general force recovery of the original algorithm: distinct short algorithms can compute the same function. Resource constraints force the exploitation of structure, not necessarily a unique structure.
+
+\section{A gap map: what is established, and what is synthesis}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.25\textwidth} >{\raggedright\arraybackslash}p{0.33\textwidth} X}
+\toprule
+\textbf{Problem} & \textbf{Existing mature tools} & \textbf{Synthesis used in this package}\\
+\midrule
+Physical implementation & Causal/mapping accounts, mechanistic computation, robust mapping & Admissible realization witnesses separated into occurrent and modal forms\\
+Function vs algorithm & ASM, recursors, algorithm identity literature & Explicit hierarchy from function to algorithm to implementation to run\\
+Actual execution & Event structures, occurrence semantics, dynamic dependence, provenance & Typed valued computational provenance as the primitive occurrent object\\
+Local causal relevance & Certificates, actual causation, responsibility & Separation of participation, value support, actual contribution, and modal dependence\\
+Abstraction & Abstract interpretation, quotienting, bisimulation, congruence & A non-linear spectrum/poset of simultaneously valid computational abstractions\\
+Modal realization & Structural causal models and causal abstraction & Intervention-preserving modal realization as a stronger layer above occurrence\\
+Cross-system comparison & Behavioral equivalence and isomorphism & Spectral containment, equivalence, overlap, and common computational core\\
+Multiplicity & Subsystem semantics and compositionality & Witness-aware realization structure rather than a spectrum treated as a bare set\\
+Consciousness use & Organizational invariance, functionalism, ICF, IIT-related debates & Constraints on the \emph{form} of admissible computational functionalism, especially actual-process and counterfactual-irrelevance principles\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The main novelty is therefore architectural rather than the invention of every mathematical ingredient. The literature already contains powerful theories of implementation, algorithms, abstraction, causality, event occurrence, and behavioral equivalence. What is less standard is to place them in one layered ontology in which:
+
+\begin{enumerate}
+  \item actual execution is represented more richly than a state sequence but less strongly than a counterfactual mechanism;
+  \item modal implementation is a separate strengthening rather than the definition of all computation;
+  \item abstractions form a structured family rather than a single privileged level;
+  \item computational facts are attached to realization witnesses, preserving multiplicity and locality;
+  \item value support and actual causation are optional enrichments rather than silently conflated with provenance;
+  \item computational functionalism is constrained by invariance principles inherited from this ontology.
+\end{enumerate}
+
+\section{Recommended reading path}
+
+For physical implementation and triviality, begin with Chalmers \cite{Chalmers1994,Chalmers1996}, then Piccinini \cite{Piccinini2015}, Sprevak \cite{Sprevak2018}, and Anderson--Piccinini \cite{AndersonPiccinini2024}. For algorithm identity, read Moschovakis \cite{Moschovakis2001}, Gurevich \cite{Gurevich2000}, and Blass--Dershowitz--Gurevich \cite{Blass2009}. For abstraction, pair Cousot--Cousot \cite{Cousot1977} with Beckers--Halpern \cite{BeckersHalpern2019} and Geiger et al. \cite{Geiger2025}. For actual execution, Winskel \cite{Winskel1987}, Agrawal--Horgan \cite{AgrawalHorgan1990}, and Cheney \cite{Cheney2010} provide complementary views. For the consciousness-facing edge of the debate, read Chalmers on organizational invariance, Maudlin's Olympia, the unfolding argument, and the 2026 intrinsic/canonical functionalism papers \cite{Maudlin1989,Doerig2019,MaKanai2026,KanaiMaCanonical2026,KanaiMaICCR2026}.
+
+\section*{Bibliographic note}
+
+The 2026 papers by Kanai, Ma, Geiger, Harding, Icard, and collaborators are recent work and, where indicated below, preprints. They are included because they directly address computational individuation, causal abstraction, and computational functionalism in forms unusually close to the questions of this package, and are treated here as an active research program rather than field-wide consensus.
+
+\begin{thebibliography}{99}
+\bibitem{AgrawalHorgan1990} H. Agrawal and J. R. Horgan. Dynamic program slicing. \emph{Proceedings of PLDI}, 1990, pp. 246--256.
+\bibitem{AndersonPiccinini2024} N. G. Anderson and G. Piccinini. \emph{The Physical Signature of Computation: A Robust Mapping Account}. Oxford University Press, 2024.
+\bibitem{BeckersHalpern2019} S. Beckers and J. Y. Halpern. Abstracting causal models. \emph{Proceedings of AAAI}, 33:2678--2685, 2019.
+\bibitem{Blass2009} A. Blass, N. Dershowitz, and Y. Gurevich. When are two algorithms the same? \emph{Bulletin of Symbolic Logic}, 15(2):145--168, 2009.
+\bibitem{BuhrmanDeWolf2002} H. Buhrman and R. de Wolf. Complexity measures and decision tree complexity: a survey. \emph{Theoretical Computer Science}, 288(1):21--43, 2002.
+\bibitem{Bryant1986} R. E. Bryant. Graph-based algorithms for Boolean function manipulation. \emph{IEEE Transactions on Computers}, C-35(8):677--691, 1986.
+\bibitem{Chalmers1994} D. J. Chalmers. On implementing a computation. \emph{Minds and Machines}, 4:391--402, 1994.
+\bibitem{Chalmers1996} D. J. Chalmers. Does a rock implement every finite-state automaton? \emph{Synthese}, 108:309--333, 1996.
+\bibitem{Chalmers1995AbsentQualia} D. J. Chalmers. Absent qualia, fading qualia, dancing qualia. In \emph{Conscious Experience}, 1995; revised material appears in \emph{The Conscious Mind}, 1996.
+\bibitem{Chalmers1996ConsciousMind} D. J. Chalmers. \emph{The Conscious Mind}. Oxford University Press, 1996.
+\bibitem{Cheney2010} J. Cheney. Causality and the semantics of provenance. arXiv:1004.3241, 2010.
+\bibitem{Cousot1977} P. Cousot and R. Cousot. Abstract interpretation: a unified lattice model for static analysis of programs by construction or approximation of fixpoints. \emph{POPL}, pp. 238--252, 1977.
+\bibitem{CurtisTrudel2021} A. Curtis-Trudel. Implementation as resemblance. \emph{Philosophy of Science}, 88(5):1021--1032, 2021.
+\bibitem{CurtisTrudel2022} A. Curtis-Trudel. The determinacy of computation. \emph{Synthese}, 200, 2022.
+\bibitem{Doerig2019} A. Doerig, A. Schurger, K. Hess, and M. H. Herzog. The unfolding argument: why IIT and other causal structure theories cannot explain consciousness. \emph{Consciousness and Cognition}, 72:49--59, 2019.
+\bibitem{Fresco2021} N. Fresco, B. J. Copeland, and M. J. Wolf. The indeterminacy of computation. \emph{Synthese}, 199:12753--12775, 2021.
+\bibitem{Geiger2025} A. Geiger et al. Causal abstraction: a theoretical foundation for mechanistic interpretability. \emph{Journal of Machine Learning Research}, 26(83):1--64, 2025.
+\bibitem{GeigerHardingIcard2026} A. Geiger, J. Harding, and T. Icard. How causal abstraction underpins computational explanation. arXiv:2508.11214, revised 2026.
+\bibitem{Gurevich2000} Y. Gurevich. Sequential Abstract-State Machines capture sequential algorithms. \emph{ACM Transactions on Computational Logic}, 1(1):77--111, 2000.
+\bibitem{Horsman2014} C. Horsman, S. Stepney, R. C. Wagner, and V. Kendon. When does a physical system compute? \emph{Proceedings of the Royal Society A}, 470:20140182, 2014.
+\bibitem{KanaiMaCanonical2026} R. Kanai and S. Ma. Canonical Functionalism: defining functional structure without observer-relative semantic maps. arXiv:2605.21506, 2026.
+\bibitem{KanaiMaICCR2026} R. Kanai and S. Ma. Intrinsic Computational Functionalism and simulated consciousness. arXiv:2606.15348, 2026.
+\bibitem{Klein2026} C. Klein. Computational individuation: isomorphism, not indeterminacy. \emph{Analysis}, 86(1):60--70, 2026. doi:10.1093/analys/anaf003.
+\bibitem{LeiferMilner2000} J. J. Leifer and R. Milner. Deriving bisimulation congruences for reactive systems. In \emph{CONCUR 2000}, LNCS 1877, pp. 243--258.
+\bibitem{MaKanai2026} S. Ma and R. Kanai. Intrinsic Computational Functionalism: from observer-relative maps to observer-independent structures. arXiv:2606.06424, 2026.
+\bibitem{Maudlin1989} T. Maudlin. Computation and consciousness. \emph{Journal of Philosophy}, 86(8):407--432, 1989.
+\bibitem{Meliou2010} A. Meliou, W. Gatterbauer, K. F. Moore, and D. Suciu. Why so? or Why no? Functional causality for explaining query answers. arXiv:0912.5340, 2009 (conference version 2010).
+\bibitem{Moschovakis2001} Y. N. Moschovakis. What is an algorithm? In \emph{Mathematics Unlimited -- 2001 and Beyond}, Springer, pp. 919--936, 2001.
+\bibitem{Piccinini2015} G. Piccinini. \emph{Physical Computation: A Mechanistic Account}. Oxford University Press, 2015.
+\bibitem{Plotkin1981} G. D. Plotkin. A structural approach to operational semantics. DAIMI FN-19, Aarhus University, 1981.
+\bibitem{Putnam1988} H. Putnam. \emph{Representation and Reality}. MIT Press, 1988.
+\bibitem{Rubenstein2017} P. K. Rubenstein et al. Causal consistency of structural equation models. \emph{UAI}, 2017.
+\bibitem{Rutten2000} J. J. M. M. Rutten. Universal coalgebra: a theory of systems. \emph{Theoretical Computer Science}, 249(1):3--80, 2000.
+\bibitem{Sprevak2012} M. Sprevak. Three challenges to Chalmers on computational implementation. \emph{Journal of Cognitive Science}, 13(2):107--143, 2012.
+\bibitem{Sprevak2018} M. Sprevak. Triviality arguments about computational implementation. In \emph{The Routledge Handbook of the Computational Mind}, 2018.
+\bibitem{Winskel1987} G. Winskel. Event structures. In \emph{Petri Nets: Applications and Relationships to Other Models of Concurrency}, LNCS 255, Springer, 1987.
+\end{thebibliography}
+
+\end{document}
