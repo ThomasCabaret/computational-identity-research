@@ -16,7 +16,7 @@ This roadmap records the major issues that cannot be settled by a local correcti
 - a mechanistic, functional, semantic, or etiological criterion;
 - or a constrained pluralism in which several policies remain legitimate.
 
-The choice must also say which modal commitments are permitted at the grounding stage. Robustness under perturbation, functional role, and stable component identity are actual properties commonly characterized by counterfactuals. If they individuate the occurrent computation, the theory should say so explicitly rather than describe the occurrence as wholly non-modal.
+The choice must also say which modal commitments are permitted at the grounding stage. Robustness under perturbation, functional role, and membership in a shared operation schema are actual classifications commonly justified by counterfactuals. If they individuate the occurrent computation, the theory should say so explicitly rather than describe the occurrence as wholly non-modal. Persistent identity of the realizing hardware, by contrast, should not enter computational identity unless it produces a further represented difference in control, state, timing, or dependency.
 
 **Required deliverable:** A formal admissibility policy for at least one model class, fixed independently of the target computation, together with:
 
@@ -113,6 +113,8 @@ Implement an enumerator for finite Boolean or finite-state examples under one ex
 - at least one example with alternative enabling.
 
 This will reveal whether the proposed spectra contain informative structure or are dominated by trivial abstractions.
+
+The repeated-versus-copied case should specifically verify component-identity invariance: replacing repeated use of one physical device by role-equivalent event occurrences on distinct devices must preserve the computational occurrence unless the replacement changes another retained computational relation.
 
 ### 9. Make common cores and overlap measures nontrivial
 

@@ -29,7 +29,7 @@
 
 \hypersetup{colorlinks=true,linkcolor=navy,citecolor=navy,urlcolor=navy,
   pdftitle={Computational Identity: A Formal Theory of Occurrent and Modal Realization},
-  pdfsubject={Mathematical formalization of computational provenance, value representation, spectra, abstraction, and functionalist invariance constraints}}
+  pdfsubject={Mathematical formalization of computational provenance, value representation, spectra, abstraction, and a candidate actual-process functionalism}}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small Computational Identity: Formal Theory}
@@ -54,7 +54,7 @@
 \newtheorem{remark}[theorem]{Remark}
 
 \newtcolorbox{intuitionbox}[1][]{enhanced,breakable,colback=sky,colframe=blue,boxrule=0.7pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Intuition},fonttitle=\bfseries,#1}
-\newtcolorbox{axiombox}[1][]{enhanced,colback=mint,colframe=navy,boxrule=0.8pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Axiom schema},fonttitle=\bfseries,#1}
+\newtcolorbox{axiombox}[1][]{enhanced,colback=mint,colframe=navy,boxrule=0.8pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Candidate axiom schema},fonttitle=\bfseries,#1}
 \newtcolorbox{cautionbox}[1][]{enhanced,breakable,colback=rose,colframe=ink,boxrule=0.65pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.6mm,bottom=1.6mm,title={Scope condition},fonttitle=\bfseries,#1}
 \newtcolorbox{summarybox}[1][]{enhanced,breakable,colback=sand,colframe=navy,boxrule=0.8pt,arc=1.4mm,left=2.3mm,right=2.3mm,top=1.7mm,bottom=1.7mm,title={Formal summary},fonttitle=\bfseries,#1}
 
@@ -84,7 +84,7 @@
 \begin{summarybox}[title={Purpose}]
 The formalism is designed to make four distinctions explicit. First, a function is not an algorithm, and an algorithm is not a particular execution. Second, an actual execution contains more structure than a sequence of global states: it contains represented values, event occurrences, and provenance. Third, a modal mechanism is stronger than an actual occurrence because it specifies behavior under unrealized inputs or interventions. Fourth, computational descriptions form a partially ordered family of abstractions rather than a single scalar ``level.''
 
-The theory therefore has two realization layers. \emph{Occurrent realization} maps a physical episode to a typed valued provenance structure using a coherent, trajectory-independent representation scheme. \emph{Modal realization} maps a physical mechanism to an abstract mechanism while preserving admissible interventions. Their abstractions generate structured spectra. A final section formalizes invariance constraints for computational-functionalist consciousness theories, with the consciousness-making property supplied by the substantive theory.
+The theory therefore has two realization layers. \emph{Occurrent realization} maps a physical episode to a typed valued provenance structure using a coherent, trajectory-independent representation scheme. \emph{Modal realization} maps a physical mechanism to an abstract mechanism while preserving admissible interventions. Their abstractions generate structured spectra. A final section formalizes one deliberately actualist candidate schema for computational functionalism. Its axioms are motivated defaults rather than consequences of the computational theory, and the consciousness-making property remains to be supplied by a substantive theory.
 \end{summarybox}
 
 \section{Preliminaries and design commitments}
@@ -104,14 +104,13 @@ The primitive occurrent question is: ``what values were actually produced, trans
 \begin{definition}[Typed port-labeled provenance structure]
 A \emph{typed port-labeled provenance structure} is a tuple
 \[
-P=(E,T,\Theta,K,\tau,\kappa,\Pi^{\mathrm{in}},\Pi^{\mathrm{out}},I,O,\prec)
+P=(E,T,\Theta,\tau,\Pi^{\mathrm{in}},\Pi^{\mathrm{out}},I,O,\prec)
 \]
 where:
 \begin{itemize}
   \item $E$ is a finite set of event occurrences;
   \item $T$ is a finite set of value-token occurrences;
   \item $\Theta$ is a set of token types and $\tau:T\to\Theta$ assigns a type to each token;
-  \item $K$ is a set of persistent component identities and $\kappa:E\to K$ assigns each event occurrence to the component that performs it;
   \item $\Pi^{\mathrm{in}}_e$ and $\Pi^{\mathrm{out}}_e$ are finite typed input and output port sets for every $e\in E$;
   \item $I\subseteq T\times E\times\bigcup_e\Pi^{\mathrm{in}}_e$ is the input-incidence relation, with $(t,e,p)\in I$ only when $p\in\Pi^{\mathrm{in}}_e$;
   \item $O\subseteq E\times\bigcup_e\Pi^{\mathrm{out}}_e\times T$ is the output-incidence relation, with $(e,p,t)\in O$ only when $p\in\Pi^{\mathrm{out}}_e$;
@@ -121,7 +120,9 @@ where:
 We require acyclicity on the finite episode.
 \end{definition}
 
-The bipartite graph induced by $I$ and $O$ is the \emph{provenance graph}. A token may fan out to several event ports; an event may have several inputs and outputs. Port labels make local tuples and their permutations explicit, while $\kappa$ distinguishes repeated uses of one component from one-off events performed by different components. The order $\prec$ allows additional causal/temporal precedence without forcing all concurrent events into one total order.
+The bipartite graph induced by $I$ and $O$ is the \emph{provenance graph}. A token may fan out to several event ports; an event may have several inputs and outputs. Port labels make local tuples and their permutations explicit. The order $\prec$ allows additional causal/temporal precedence without forcing all concurrent events into one total order.
+
+Persistent hardware identity may be retained as an annotation of a physical realization, but it is not a primitive of computational occurrence. Reusing one device for several event occurrences or replacing those uses by distinct devices does not by itself change the computation when the represented events, ports, values, and dependencies are preserved. Hardware persistence matters only when it induces some further computationally represented distinction admitted by the selected abstraction policy.
 
 \begin{definition}[Valued provenance structure]
 For each type $\theta\in\Theta$, let $A_\theta$ be an abstract value set. A \emph{valued provenance structure} is a typed port-labeled provenance structure together with
@@ -187,10 +188,10 @@ The two propositions delimit what stationarity achieves. It blocks incompatible 
 \begin{definition}[Computational occurrence]
 A \emph{computational occurrence} is a valued provenance structure
 \[
-C=(E_C,T_C,\Theta_C,K_C,\tau_C,\kappa_C,
+C=(E_C,T_C,\Theta_C,\tau_C,
 \Pi_C^{\mathrm{in}},\Pi_C^{\mathrm{out}},I_C,O_C,\prec_C,\nu_C)
 \]
-together with its component identities, port families, and optional event labels $\lambda:E_C\to\Lambda$ that identify only the event information licensed at the occurrent level. At minimum, an event label may record the actual port-ordered input-output tuple. A total operation type is not required.
+together with its port families and optional event-schema labels $\lambda:E_C\rightharpoonup\Lambda$ that identify only the event information licensed at the occurrent level. At minimum, an event label may record the actual port-ordered input-output tuple. Events may share a schema label without being performed by the same persistent piece of hardware. A total operation type is not required.
 \end{definition}
 
 Thus an event may be recorded only as the actual fact
@@ -202,12 +203,12 @@ without asserting what would happen on any other input tuple.
 \subsection{Occurrence morphisms}
 
 \begin{definition}[Provenance homomorphism]
-Let $P$ and $C$ be typed valued provenance structures. A \emph{provenance homomorphism} $h:P\to C$ consists of maps on events, tokens, component identities, and event-local ports such that:
+Let $P$ and $C$ be typed valued provenance structures. A \emph{provenance homomorphism} $h:P\to C$ consists of maps on events, tokens, and event-local ports such that:
 \begin{enumerate}
   \item incidence is preserved through the corresponding port maps;
   \item order is preserved: $x\prec_P y\Rightarrow h(x)\preceq_C h(y)$ whenever the images are distinct;
   \item token types and represented values are preserved through the declared type/value maps;
-  \item component identities and any event labels declared structurally relevant are preserved through their declared maps.
+  \item any event-schema labels declared structurally relevant are preserved through their declared maps.
 \end{enumerate}
 The morphism may identify multiple low-level events or tokens into one abstract event or token; this is the basic abstraction operation.
 \end{definition}
@@ -218,7 +219,7 @@ A provenance homomorphism $h:P\to C$ is a \emph{witness-full provenance quotient
   \item it is surjective on abstract events and tokens;
   \item every input and output incidence of $C$ is the image of an incidence of $P$;
   \item every strict precedence declared in $C$ is witnessed by a precedence relation, or by a directed provenance path, between suitable members of the corresponding fibers in $P$;
-  \item identifications inside a fiber satisfy the selected admissibility policy, which may additionally require connected fibers, boundary preservation, or component compatibility.
+  \item identifications inside a fiber satisfy the selected admissibility policy, which may additionally require connected fibers, boundary preservation, or event-schema compatibility.
 \end{enumerate}
 Thus an abstraction may forget or identify concrete structure, but it may not manufacture an abstract operand, result, or dependency that has no concrete witness.
 \end{definition}
@@ -286,14 +287,14 @@ This formalizes the movie-playback distinction: replaying snapshots is not autom
 
 \subsection{Partial operation tables from actual repetitions}
 
-For a component identity $k\in K$, collect the actual port-ordered input-output tuples observed across events with $\kappa(e)=k$. The port structure is what makes two repeated tuples comparable rather than equal only up to an unspecified permutation.
+Let $C$ be a computational occurrence equipped with a partial event-schema labeling $\lambda:E_C\rightharpoonup\Lambda$. For a schema $\ell\in\Lambda$, collect the actual port-ordered input-output tuples observed across events with $\lambda(e)=\ell$ and a common typed port signature. The port structure is what makes repeated tuples comparable rather than equal only up to an unspecified permutation. Grouping events under $\ell$ is part of the representation/admissibility claim; it is not inferred merely from reuse of one physical device.
 
 \begin{definition}[Empirical partial operation]
-The \emph{empirical partial operation} of component $k$ in episode $P$ is the partial relation/function
+The \emph{empirical partial operation} of schema $\ell$ in occurrence $C$ is the partial relation/function
 \[
-\widehat f_k:\prod_i A_i\rightharpoonup \prod_j B_j
+\widehat f_\ell:\prod_i A_i\rightharpoonup \prod_j B_j
 \]
-whose graph consists exactly of the distinct actual input-output tuples observed at occurrences of $k$, provided repeated identical inputs have compatible outputs.
+whose graph consists exactly of the distinct actual input-output tuples observed at events labeled $\ell$, provided repeated identical inputs have compatible outputs.
 \end{definition}
 
 This object is strictly occurrent: it says nothing about input tuples not encountered.
@@ -465,7 +466,7 @@ For an occurrent structure $C$, a modal mechanism $M$ is a \emph{compatible comp
 \]
 \end{definition}
 
-Repeated actual uses of the same component shrink $\mathrm{Comp}(C)$ by expanding its empirical partial operation, but cannot in general make the completion unique without enough coverage or extra assumptions.
+Repeated actual instances of the same admissibly grounded event schema shrink $\mathrm{Comp}(C)$ by expanding its empirical partial operation, but cannot in general make the completion unique without enough coverage or extra assumptions.
 
 \section{Abstraction geometry: refinement is not a scalar}
 
@@ -620,9 +621,9 @@ For a reference realization $M_0$ of $C$, let $B(b)$ be the resource region indu
 
 The shape of this profile expresses spectral rigidity or degeneracy under compression/resource constraints.
 
-\section{Formal constraints for computational functionalism}
+\section{A candidate schema for actual-process computational functionalism}
 
-This section defines a class of computational-functionalist theories that respect the conceptual constraints motivated in the companion note. The computational basis of consciousness is the hypothesis under study, while the formalism specifies the invariances that such a hypothesis must satisfy.
+This section does not derive psychophysical constraints from the computational theory. It defines one deliberately actualist subclass of computational-functionalist theories by turning the companion note's naturality desiderata into explicit axioms. These axioms are motivated defaults: a different computational functionalism may reject one, but then lies outside this candidate subclass and should state the resulting modal, representational, or individuation commitment explicitly.
 
 \subsection{Phenomenal assignment}
 
@@ -630,9 +631,9 @@ Let $\mathcal E$ be a class of physical episodes and $\mathcal H$ a set of pheno
 \[
 \Phi:\mathcal E\rightharpoonup\mathcal H
 \]
-whose domain contains candidate conscious episodes. The substantive consciousness theory specifies which computational invariant determines $\Phi$. The present framework constrains only the invariances of that dependence.
+whose domain contains candidate conscious episodes. The substantive consciousness theory specifies which computational invariant determines $\Phi$. Within the candidate subclass defined here, the following axioms stipulate invariances of that dependence.
 
-Let $\mathcal A(P)$ denote the consciousness-relevant actual computational structure extracted from $\Real_\Occ(P)$ or $\Spec_\Occ(P)$. The extraction rule may retain some abstractions and discard others, but must itself satisfy the invariance axioms below.
+Let $\mathcal A(P)$ denote the consciousness-relevant actual computational structure extracted from $\Real_\Occ(P)$ or $\Spec_\Occ(P)$. The extraction rule may retain some abstractions and discard others. To belong to the present candidate class, it must satisfy the invariance axioms below.
 
 Three roles of modal information must be distinguished. Modal facts may help \emph{individuate} the carriers, variables, operations, or boundaries entering $\mathcal A(P)$; interventions may provide \emph{evidence} for that individuation; and a theory may or may not treat unmanifested alternatives as \emph{constitutive} of present phenomenal character. F2 constrains only the third role. It does not license an arbitrary occurrent decoding, and it cannot be invoked until the grounding of $\mathcal A(P)$ has been fixed independently.
 
@@ -703,13 +704,13 @@ If a candidate theory includes value-support structure or local operation type i
 A computational-functionalist theory is \emph{actual-process} if $\Phi$ factors through an invariant of $\Real_\Occ(P)$ (possibly after admissible quotienting) and satisfies F2: purely off-trajectory modal changes do not alter present phenomenal character.
 \end{definition}
 
-The substantive theory selects the consciousness-making invariant; this definition constrains the type of dependence it may express.
+The substantive theory selects the consciousness-making invariant. This definition stipulates a particular actualist type of dependence; it is not a theorem about every possible computational functionalism.
 
 \section{Open problems exposed by the formalism}
 
 \subsection{Admissible factorization and variable choice}
 
-The theory assumes an admissible decomposition into carriers, tokens, events, and components. Arbitrary coordinate transformations can destroy locality or manufacture it. A mature physical theory must therefore define admissible factorization using independently motivated physical criteria: locality, causal separability, stability, interaction boundaries, or dynamical modularity.
+The theory assumes an admissible decomposition into carriers, tokens, and event occurrences. Arbitrary coordinate transformations can destroy locality or manufacture it. A mature physical theory must therefore define admissible factorization using independently motivated physical criteria: locality, causal separability, stability, interaction boundaries, or dynamical modularity. Persistent physical components may help justify that decomposition or a shared operation schema, but their material identity is not by itself a computational invariant.
 
 \subsection{Subject individuation and overlapping witnesses}
 
@@ -741,10 +742,11 @@ The computational theory can be reconstructed from the following scheme.
 
 \begin{enumerate}
   \item A physical episode is decomposed into local carriers, token occurrences, event occurrences, and actual provenance.
+  \item Persistent identity of the realizing hardware is not a primitive computational invariant; it matters only through a further represented difference retained by the realization policy.
   \item A coherent representation scheme assigns abstract values to carrier states without trajectory-indexed relabeling.
   \item An occurrent computation is a typed valued provenance quotient witnessed by an admissible, witness-full morphism.
   \item The category of all such witnesses induces a preorder of abstractions; quotienting by mutual abstraction gives the occurrent spectrum as a poset.
-  \item Repeated actual component uses induce partial operation tables; total local operation semantics may optionally induce value-support hypergraphs.
+  \item Repeated actual instances of an admissibly grounded event schema induce partial operation tables; total local operation semantics may optionally induce value-support hypergraphs.
   \item A modal mechanism specifies total transition rules and admissible interventions. Modal realization requires abstraction to commute across those interventions.
   \item Every unfolding-compatible modal realization projects to corresponding occurrent realizations on actual runs; the projection is generally non-injective.
   \item Local abstractions compose when their interfaces support congruence; independent local choices generate product-like, non-linear refinement orders.
@@ -759,12 +761,14 @@ For a physical episode $P$ and mechanism $M$,
 \Real_\Occ(P)\longrightarrow\Spec_\Occ(P),\qquad
 \Real_\Mod(M)\longrightarrow\Spec_\Mod(M),
 \]
-with unfolding-compatible modal realization projecting to occurrent realization on each run, spectra ordered by admissible abstraction after poset reflection, and computational functionalism represented by invariant maps on the witness/spectral structure of actual episodes rather than by arbitrary state labeling or bare input-output equality.
+with unfolding-compatible modal realization projecting to occurrent realization on each run, spectra ordered by admissible abstraction after poset reflection, and the actual-process functionalist candidate represented by invariant maps on the witness/spectral structure of actual episodes rather than by arbitrary state labeling or bare input-output equality.
 \end{summarybox}
 
-\section*{Selected references}
-
+\renewcommand{\refname}{Selected references}
 \begin{thebibliography}{20}
+\small
+\RaggedRight
+\hbadness=10000
 \bibitem{Chalmers1994} D. J. Chalmers. On implementing a computation. \emph{Minds and Machines}, 4:391--402, 1994.
 \bibitem{Chalmers1996} D. J. Chalmers. Does a rock implement every finite-state automaton? \emph{Synthese}, 108:309--333, 1996.
 \bibitem{Piccinini2015} G. Piccinini. \emph{Physical Computation: A Mechanistic Account}. Oxford University Press, 2015.

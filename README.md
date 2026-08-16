@@ -2,8 +2,8 @@
 
 This repository contains three standalone English-language documents, intended to be read in the following order:
 
-1. `computational_identity_conceptual_note` - a problem-driven conceptual presentation. It develops computational identity through thought experiments, builds the occurrent/modal spectrum framework, and derives structural constraints for a disciplined computational functionalism of consciousness.
-2. `computational_identity_formal_theory` - the mathematical appendix. It formalizes typed valued provenance structures, coherent representation, occurrent and modal realization witnesses, realization categories and spectra, value supports, abstraction and refinement, containment and common cores, resource-sensitive extensions, and functionalist invariance axioms.
+1. `computational_identity_conceptual_note` - a three-part conceptual presentation: diagnostic thought experiments, a standalone theory of computational identity, and an exploration of naturality desiderata for computational functionalism.
+2. `computational_identity_formal_theory` - the mathematical appendix. It formalizes typed valued provenance structures, coherent representation, occurrent and modal realization witnesses, realization categories and spectra, value supports, abstraction and refinement, containment and common cores, resource-sensitive extensions, and one candidate actual-process functionalist axiom schema.
 3. `computational_identity_state_of_the_art` - the contextual literature review. It maps relevant work on physical computation and triviality, algorithms versus functions, operational semantics and bisimulation, abstraction and causal abstraction, event structures and provenance, actual causation and value support, and computational functionalism.
 
 Each document is provided both as a standalone LaTeX source and as a compiled PDF. The PDFs are intentional versioned artifacts, so a checkout is immediately readable without a local TeX installation.
